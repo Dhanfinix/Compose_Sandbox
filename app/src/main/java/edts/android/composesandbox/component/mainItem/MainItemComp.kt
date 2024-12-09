@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import edts.android.composesandbox.R
+import edts.android.composesandbox.component.CardCornerCutComp
 import edts.android.composesandbox.navigation.Destination
 import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
 import edts.android.composesandbox.ui.theme.InterFamily
@@ -27,13 +28,9 @@ fun MainItemComp(
     state: MainItemState,
     onClick: ()->Unit
 ) {
-    val shape = CutCornerShape(topStartPercent = 50, bottomEndPercent = 50)
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(shape)
-            .clickable { onClick() },
-        shape = shape
+    CardCornerCutComp(
+        modifier = modifier,
+        onClick = { onClick() }
     ) {
         Row(
             Modifier.padding(

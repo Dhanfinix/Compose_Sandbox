@@ -2,6 +2,7 @@ package edts.android.composesandbox.screen.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -50,7 +51,7 @@ fun MainScreen(
     val scrollBehavior = exitUntilCollapsedScrollBehavior(topAppBarState)
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
-    var filteredItems by remember { mutableStateOf<List<MainItemState>?>(null) }
+    var filteredItems by remember { mutableStateOf(uiState.menuItems) }
 
     LaunchedEffect(uiState.searchState.value) {
         filteredItems = uiState.menuItems.filter {

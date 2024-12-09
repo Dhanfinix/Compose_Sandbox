@@ -11,4 +11,11 @@
     <string name="row">Row</string>
     <string name="bottom_sheet">Bottom Sheet</string>
     <string name="not_found">Component Not Found</string>
+    <string name="cdata_string"><![CDATA[
+        This string is from <b>CDATA HTML resource</b>!
+        <i>This part is italicized.</i>
+        <u>This part is underlined.</u>
+        <font color="#FF5733">This part is in a different color.</font>
+        Check out <a href="https://developer.android.com/reference/kotlin/androidx/compose/ui/text/AnnotatedString.Companion#summary">this link</a> for more details.
+    ]]></string>
 </resources>

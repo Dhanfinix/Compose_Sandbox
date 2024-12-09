@@ -50,7 +50,7 @@ import edts.android.composesandbox.ui.theme.body1
 fun SearchComp(
     modifier: Modifier = Modifier,
     state: SearchState,
-    hint: String = "Masukkan kata kunci pencarian",
+    hint: String = "Input search keyword",
     delegate: SearchDelegate? = null
 ) {
     var isExpanded by remember { mutableStateOf(false) }
