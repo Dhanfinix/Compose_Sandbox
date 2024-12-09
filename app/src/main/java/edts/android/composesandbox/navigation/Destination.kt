@@ -53,4 +53,9 @@ sealed class Destination {
     data class Row(
         override val route: String = "RowRoute"
     ) : Destination()
+
+    @Serializable
+    data class BottomSheet(
+        override val route: String = "BottomSheetRoute"
+    ) : Destination()
 }

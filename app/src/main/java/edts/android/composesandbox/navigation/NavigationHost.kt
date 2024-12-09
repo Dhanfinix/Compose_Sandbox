@@ -1,8 +1,10 @@
 package edts.android.composesandbox.navigation
 
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -16,6 +18,7 @@ fun NavigationHost(
     modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
+    val context = LocalContext.current
 
     NavHost(
         modifier = modifier,
@@ -24,20 +27,28 @@ fun NavigationHost(
     ){
         composable<Destination.Home> {
             MainScreen{
-                navController.navigate(it){
-                    popUpTo(navController.graph.findStartDestination().id){
-                        saveState = true
+                try {
+                    navController.navigate(it){
+                        popUpTo(navController.graph.findStartDestination().id){
+                            // save main screen state
+                            saveState = true
+                        }
                     }
+                } catch (e: IllegalArgumentException){
+                    Toast.makeText(context, "Feature not ready yet", Toast.LENGTH_SHORT).show()
                 }
             }
         }
         composable<Destination.Text> {
-            TextScreen()
+            TextScreen{ navController.navigateUp() }
             NavBackHandler(navController)
         }
     }
 }
 
+/**
+ * This component is used to handle on back press
+ */
 @Composable
 fun NavBackHandler(
     navController: NavHostController
@@ -45,6 +56,7 @@ fun NavBackHandler(
     BackHandler {
         navController.navigate(Destination.Home()) {
             popUpTo(navController.graph.findStartDestination().id)
+            // restore main screen state
             restoreState = true
             launchSingleTop = true
         }

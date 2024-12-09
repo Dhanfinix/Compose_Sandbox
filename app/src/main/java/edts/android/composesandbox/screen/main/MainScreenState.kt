@@ -18,5 +18,6 @@ data class MainScreenState(
         MainItemState(R.string.popup, Destination.Popup()),
         MainItemState(R.string.column, Destination.Column()),
         MainItemState(R.string.row, Destination.Row()),
+        MainItemState(R.string.bottom_sheet, Destination.BottomSheet()),
     )
 )
