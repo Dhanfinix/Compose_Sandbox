@@ -63,6 +63,7 @@ dependencies {
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.compose.nav)
     implementation(libs.kotlin.serialization)
+    implementation(libs.dot.lottie)
 }
 
 hilt {

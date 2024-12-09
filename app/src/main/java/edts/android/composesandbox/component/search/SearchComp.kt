@@ -2,6 +2,12 @@ package edts.android.composesandbox.component.search
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -45,7 +51,7 @@ fun SearchComp(
     modifier: Modifier = Modifier,
     state: SearchState,
     hint: String = "Masukkan kata kunci pencarian",
-    onValueChange: (String)->Unit
+    delegate: SearchDelegate? = null
 ) {
     var isExpanded by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -61,6 +67,7 @@ fun SearchComp(
     KeyboardVisibilityListener {
         isKeyboardVisible = it
         if (!isKeyboardVisible){
+            delegate?.onClose()
             isExpanded = false
         }
     }
@@ -77,7 +84,7 @@ fun SearchComp(
                     value = state.value,
                     textStyle = MontserratFamily.body1(),
                     onValueChange = {newValue->
-                        onValueChange(newValue)
+                        delegate?.onChange(newValue)
                     },
                     maxLines = 1,
                     singleLine = true,
@@ -97,7 +104,10 @@ fun SearchComp(
                             Box(
                                 Modifier.weight(1f)
                             ) {
-                                if(state.value.isEmpty()){
+                                androidx.compose.animation
+                                .AnimatedVisibility(
+                                   visible = state.value.isEmpty()
+                                ) {
                                     Text(
                                         text = hint,
                                         style = MontserratFamily.body1(),
@@ -110,7 +120,7 @@ fun SearchComp(
                             AnimatedVisibility(state.value.isNotEmpty()) {
                                 IconButton(
                                     modifier = Modifier.padding(horizontal = 4.dp),
-                                    onClick = { onValueChange("") }
+                                    onClick = { delegate?.onChange("") }
                                 ) {
                                     Image(
                                         painter = painterResource(R.drawable.baseline_close_24),
@@ -151,7 +161,7 @@ private fun SearchCompPreview(
     ComposeSandboxTheme {
         SearchComp(
             state = SearchState(value = inputText)
-        ) { }
+        )
     }
 }
 
