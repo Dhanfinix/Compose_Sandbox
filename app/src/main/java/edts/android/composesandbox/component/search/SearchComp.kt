@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -145,7 +146,7 @@ private fun SearchButtonComp(
         modifier = Modifier.padding(horizontal = 4.dp),
         onClick = { onClick() }
     ) {
-        Image(
+        Icon(
             painter = painterResource(R.drawable.baseline_search_24),
             contentDescription = "Search"
         )

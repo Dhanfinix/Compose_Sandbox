@@ -2,7 +2,6 @@ package edts.android.composesandbox.screen.main
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -32,7 +31,6 @@ import com.lottiefiles.dotlottie.core.util.DotLottieSource
 import edts.android.composesandbox.R
 import edts.android.composesandbox.component.GreetingComp
 import edts.android.composesandbox.component.mainItem.MainItemComp
-import edts.android.composesandbox.component.mainItem.MainItemState
 import edts.android.composesandbox.component.search.SearchComp
 import edts.android.composesandbox.component.search.SearchDelegate
 import edts.android.composesandbox.navigation.Destination
@@ -83,7 +81,7 @@ fun MainScreen(
                             }
 
                             override fun onClose() {
-                                if (filteredItems.isNullOrEmpty()){
+                                if (filteredItems.isEmpty()){
                                     viewModel.setSearchValue("")
                                 }
                             }
@@ -100,23 +98,21 @@ fun MainScreen(
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
         ) {
-            filteredItems?.let {
-                itemsIndexed(it){index, item->
-                    val itemModifier = if(index == 0)
-                        Modifier.padding(top = 8.dp)
-                    else Modifier
-                    MainItemComp(
-                        modifier = itemModifier.padding(bottom = 8.dp),
-                        number = index+1,
-                        state = item
-                    ){
-                        onNavigate(item.route)
-                    }
+            itemsIndexed(filteredItems){index, item->
+                val itemModifier = if(index == 0)
+                    Modifier.padding(top = 8.dp)
+                else Modifier
+                MainItemComp(
+                    modifier = itemModifier.padding(bottom = 8.dp),
+                    number = index+1,
+                    state = item
+                ){
+                    onNavigate(item.route)
                 }
             }
 
             item {
-                if (filteredItems.isNullOrEmpty()){
+                if (filteredItems.isEmpty()){
                     Column(
                         Modifier.fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally
