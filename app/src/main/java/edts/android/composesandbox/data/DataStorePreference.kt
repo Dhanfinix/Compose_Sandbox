@@ -27,6 +27,6 @@ class DataStorePreference(
     suspend fun saveUsername(name: String) = savePreference(USERNAME, name)
 
     fun getUsername(
-        defaultValue: String = "Guest Datastore"
+        defaultValue: String = "Guest"
     ) = getPreference(USERNAME, defaultValue)
 }

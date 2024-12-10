@@ -110,7 +110,8 @@ fun MainScreen(
                 MainItemComp(
                     modifier = itemModifier.padding(bottom = 8.dp),
                     number = index+1,
-                    state = item
+                    state = item,
+                    highlight = uiState.searchState.value
                 ){
                     onNavigate(item.route)
                 }
