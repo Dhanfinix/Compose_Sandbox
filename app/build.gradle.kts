@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.compose.nav)
     implementation(libs.kotlin.serialization)
     implementation(libs.dot.lottie)
+    implementation(libs.datastore)
+    implementation(libs.hilt.nav)
 }
 
 hilt {

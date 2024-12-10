@@ -6,7 +6,7 @@ import edts.android.composesandbox.component.search.SearchState
 import edts.android.composesandbox.navigation.Destination
 
 data class MainScreenState(
-    val userName: String? = "Guest",
+    val userName: String? = null,
     val searchState: SearchState = SearchState(),
     val menuItems: List<MainItemState> = listOf(
         MainItemState(R.string.text, Destination.Text()),

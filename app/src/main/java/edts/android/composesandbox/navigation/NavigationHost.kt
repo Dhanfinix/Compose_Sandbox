@@ -5,12 +5,14 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edts.android.composesandbox.screen.main.MainScreen
+import edts.android.composesandbox.screen.main.MainViewModel
 import edts.android.composesandbox.screen.showcase.text.TextScreen
 
 @Composable
@@ -26,7 +28,8 @@ fun NavigationHost(
         startDestination = Destination.Home()
     ){
         composable<Destination.Home> {
-            MainScreen{
+            val mainViewModel = hiltViewModel<MainViewModel>()
+            MainScreen(viewModel = mainViewModel){
                 try {
                     navController.navigate(it){
                         popUpTo(navController.graph.findStartDestination().id){

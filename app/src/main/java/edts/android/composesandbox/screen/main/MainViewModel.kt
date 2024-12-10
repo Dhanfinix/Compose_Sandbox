@@ -1,16 +1,26 @@
 package edts.android.composesandbox.screen.main
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import edts.android.composesandbox.data.DataStorePreference
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// TODO : create data store and inject it to constructor
+/**
+ * @param dataStore is nullable to accommodate the preview in screen,
+ * because the datastore preference need application context which can't
+ * be obtained via preview.
+ */
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val dataStore: DataStorePreference?
+) : ViewModel() {
     private val _uiState = MutableStateFlow(MainScreenState())
     val uiState: StateFlow<MainScreenState>
         get() = _uiState
@@ -23,5 +33,23 @@ class MainViewModel @Inject constructor() : ViewModel() {
                 )
             )
         }
+    }
+
+    init {
+        getUsername()
+    }
+
+    private fun setUsername(value: String){
+        _uiState.update {
+            it.copy(
+                userName = value
+            )
+        }
+    }
+
+    private fun getUsername() = viewModelScope.launch {
+        dataStore?.getUsername()?.collectLatest {name->
+            setUsername(name)
+        } ?: setUsername("Datastore Null")
     }
 }

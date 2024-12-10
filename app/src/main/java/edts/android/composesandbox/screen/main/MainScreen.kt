@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lottiefiles.dotlottie.core.compose.ui.DotLottieAnimation
 import com.lottiefiles.dotlottie.core.util.DotLottieSource
@@ -42,7 +43,7 @@ import edts.android.composesandbox.ui.theme.subtitle1
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel = viewModel(),
+    viewModel: MainViewModel,
     onNavigate: (Destination)->Unit
 ) {
     val topAppBarState = rememberTopAppBarState()
@@ -137,6 +138,8 @@ fun MainScreen(
 @Composable
 private fun MainScreenPreview() {
     ComposeSandboxTheme {
-        MainScreen{}
+        MainScreen(
+            viewModel = MainViewModel(null)
+        ){}
     }
 }

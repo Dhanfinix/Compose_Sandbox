@@ -12,8 +12,9 @@ hilt = "2.51.1"
 composeNav = "2.8.4"
 serialization = "2.0.20"
 serialization-json = "1.7.3"
-lottie = "4.0.0"
 dot-lottie = "0.6.1"
+datastore = "1.1.1"
+hilt-nav = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,8 +35,9 @@ dagger-hilt = { group = "com.google.dagger", name = "hilt-android", version.ref 
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 compose-nav = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNav" }
 kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization-json" }
-lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie"}
 dot-lottie = { group = "com.github.LottieFiles", name = "dotlottie-android", version.ref = "dot-lottie" }
+datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+hilt-nav = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-nav" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
