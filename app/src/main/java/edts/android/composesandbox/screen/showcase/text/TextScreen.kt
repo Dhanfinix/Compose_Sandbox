@@ -4,15 +4,8 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Cyan
 import androidx.compose.ui.graphics.Color.Companion.Magenta
 import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -45,14 +37,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edts.android.composesandbox.R
 import edts.android.composesandbox.component.SpannableText
-import edts.android.composesandbox.component.topbar.ShowcaseTopbarComp
+import edts.android.composesandbox.screen.showcase.base.ShowcaseBaseScreen
 import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
 import edts.android.composesandbox.ui.theme.InterFamily
 import edts.android.composesandbox.ui.theme.MontserratFamily
 import edts.android.composesandbox.ui.theme.Purple40
 import edts.android.composesandbox.ui.theme.body1
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TextScreen(
     modifier: Modifier = Modifier,
@@ -60,222 +51,208 @@ fun TextScreen(
 ) {
     val context = LocalContext.current
     var expandEllipsis by remember { mutableStateOf(false) }
-    val scrollBehavior = exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
-    Scaffold(
-        modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .fillMaxSize(),
-        topBar = {
-            ShowcaseTopbarComp(
-                title = R.string.text,
-                scrollBehavior = scrollBehavior
-            ){ onBack() }
+    ShowcaseBaseScreen(
+        modifier = modifier,
+        title = R.string.text,
+        onBack = onBack
+    ){
+        item {
+            // normal text
+            Text("Normal Text")
         }
-    ) {innerPadding->
-        LazyColumn (
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            item {
-                // normal text
-                Text("Normal Text")
-            }
-            item {
-                // text with montserrat style
-                Text(
-                    text = "Text with montserrat family",
-                    style = MontserratFamily.body1()
+        item {
+            // text with montserrat style
+            Text(
+                text = "Text with montserrat family",
+                style = MontserratFamily.body1()
+            )
+        }
+        item {
+            // text with inter style
+            Text(
+                text = "Text with inter family",
+                style = InterFamily.body1()
+            )
+        }
+        item {
+            // text color
+            Text(
+                text = "[Copy Method] Text with montserrat family and green color",
+                style = MontserratFamily.body1().copy(
+                    color = Color.Green
                 )
-            }
-            item {
-                // text with inter style
-                Text(
-                    text = "Text with inter family",
-                    style = InterFamily.body1()
-                )
-            }
-            item {
-                // text color
-                Text(
-                    text = "[Copy Method] Text with montserrat family and green color",
-                    style = MontserratFamily.body1().copy(
-                        color = Color.Green
+            )
+        }
+        item {
+            Text(
+                text = "[Parameter] Text with montserrat family and red color",
+                style = MontserratFamily.body1(),
+                color = Color.Red
+            )
+        }
+        item {
+            // italic
+            Text(
+                text = "Text with inter family italic",
+                style = InterFamily.body1(),
+                fontStyle = FontStyle.Italic
+            )
+        }
+        item {
+            // bold
+            Text(
+                text = "Text with montserrat family bold",
+                style = MontserratFamily.body1(),
+                fontWeight = FontWeight.Bold
+            )
+        }
+        item {
+            // shadow
+            val offset = Offset(5.0f, 10.0f)
+            Text(
+                text = "Text with inter family and blue shadow",
+                style = InterFamily.body1().copy(
+                    shadow = Shadow(
+                        color = Color.Blue,
+                        offset = offset,
+                        blurRadius = 3f
                     )
                 )
-            }
-            item {
-                Text(
-                    text = "[Parameter] Text with montserrat family and red color",
-                    style = MontserratFamily.body1(),
-                    color = Color.Red
-                )
-            }
-            item {
-                // italic
-                Text(
-                    text = "Text with inter family italic",
-                    style = InterFamily.body1(),
-                    fontStyle = FontStyle.Italic
-                )
-            }
-            item {
-                // bold
-                Text(
-                    text = "Text with montserrat family bold",
-                    style = MontserratFamily.body1(),
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            item {
-                // shadow
-                val offset = Offset(5.0f, 10.0f)
-                Text(
-                    text = "Text with inter family and blue shadow",
-                    style = InterFamily.body1().copy(
-                        shadow = Shadow(
-                            color = Color.Blue,
-                            offset = offset,
-                            blurRadius = 3f
-                        )
+            )
+        }
+        item {
+            // gradient color
+            val gradientColors = listOf(Cyan, Magenta, Purple40)
+            Text(
+                text = "This is text with gradient color",
+                style = TextStyle(
+                    brush = Brush.linearGradient(
+                        colors = gradientColors
                     )
                 )
-            }
-            item {
-                // gradient color
-                val gradientColors = listOf(Cyan, Magenta, Purple40)
-                Text(
-                    text = "This is text with gradient color",
-                    style = TextStyle(
-                        brush = Brush.linearGradient(
-                            colors = gradientColors
-                        )
-                    )
-                )
-            }
-            item {
-                // marquee
-                Text(
-                    text = "This marquee text, it's long, so it need to be scrolled by marquee modifier method",
-                    modifier = Modifier.basicMarquee()
-                )
-            }
-            item {
-                // ellipsis
-                Text(
-                    text = "This is also long text, we use ellipsis to show that the text isn't done yet",
-                    maxLines = if (expandEllipsis) Int.MAX_VALUE else 1,
-                    overflow =
-                    if (expandEllipsis)
-                        TextOverflow.Visible
-                    else
-                        TextOverflow.Ellipsis,
-                    modifier = Modifier.clickable {
-                        expandEllipsis = !expandEllipsis
-                    }
-                )
-            }
-            item {
-                // text with underline
-                Text(
-                    text = "Text with underline",
-                    textDecoration = TextDecoration.Underline
-                )
-            }
-            item {
-                // text with LineThrough
-                Text(
-                    text = "Text with LineThrough",
-                    textDecoration = TextDecoration.LineThrough
-                )
-            }
-            item {
-                // text with link
-                SpannableText(
-                    text = "This is",
-                    spanText = "spannable",
-                    afterSpanText = "text"
-                ) {
-                    Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
+            )
+        }
+        item {
+            // marquee
+            Text(
+                text = "This marquee text, it's long, so it need to be scrolled by marquee modifier method",
+                modifier = Modifier.basicMarquee()
+            )
+        }
+        item {
+            // ellipsis
+            Text(
+                text = "This is also long text, we use ellipsis to show that the text isn't done yet",
+                maxLines = if (expandEllipsis) Int.MAX_VALUE else 1,
+                overflow =
+                if (expandEllipsis)
+                    TextOverflow.Visible
+                else
+                    TextOverflow.Ellipsis,
+                modifier = Modifier.clickable {
+                    expandEllipsis = !expandEllipsis
                 }
+            )
+        }
+        item {
+            // text with underline
+            Text(
+                text = "Text with underline",
+                textDecoration = TextDecoration.Underline
+            )
+        }
+        item {
+            // text with LineThrough
+            Text(
+                text = "Text with LineThrough",
+                textDecoration = TextDecoration.LineThrough
+            )
+        }
+        item {
+            // text with link
+            SpannableText(
+                text = "This is",
+                spanText = "spannable",
+                afterSpanText = "text"
+            ) {
+                Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
             }
-            item {
-                // text with different fonts
-                Text(
-                    text = buildAnnotatedString {
-                        append("This text uses ")
-                        withStyle(style = SpanStyle(
-                            fontFamily = InterFamily,
-                            fontWeight = FontWeight.Bold
-                        )) {
-                            append("Inter font")
-                        }
-                        append(" and this text uses ")
-                        withStyle(style = SpanStyle(
-                            fontFamily = MontserratFamily,
-                            fontWeight = FontWeight.Bold
-                        )) {
-                            append("Montserrat font")
-                        }
-                        append(".")
-                    },
-                    style = TextStyle(fontSize = 16.sp)
+        }
+        item {
+            // text with different fonts
+            Text(
+                text = buildAnnotatedString {
+                    append("This text uses ")
+                    withStyle(style = SpanStyle(
+                        fontFamily = InterFamily,
+                        fontWeight = FontWeight.Bold
+                    )) {
+                        append("Inter font")
+                    }
+                    append(" and this text uses ")
+                    withStyle(style = SpanStyle(
+                        fontFamily = MontserratFamily,
+                        fontWeight = FontWeight.Bold
+                    )) {
+                        append("Montserrat font")
+                    }
+                    append(".")
+                },
+                style = TextStyle(fontSize = 16.sp)
+            )
+        }
+        item {
+            // Text with Subscript and Superscript
+            Text(
+                text = buildAnnotatedString {
+                    append("Below is text with sub/super script\n")
+                    append("H")
+                    withStyle(style = SpanStyle(baselineShift = BaselineShift.Subscript)) {
+                        append("2")
+                    }
+                    append("O is water and E = mc")
+                    withStyle(style = SpanStyle(baselineShift = BaselineShift.Superscript)) {
+                        append("2")
+                    }
+                    append(" is a famous equation.")
+                },
+                style = MontserratFamily.body1()
+            )
+        }
+        item {
+            // text with spacing spacing
+            Text(
+                text = "Text with letter spacing",
+                style = MontserratFamily.body1().copy(
+                    letterSpacing = 2.sp
                 )
-            }
-            item {
-                // Text with Subscript and Superscript
-                Text(
-                    text = buildAnnotatedString {
-                        append("Below is text with sub/super script\n")
-                        append("H")
-                        withStyle(style = SpanStyle(baselineShift = BaselineShift.Subscript)) {
-                            append("2")
-                        }
-                        append("O is water and E = mc")
-                        withStyle(style = SpanStyle(baselineShift = BaselineShift.Superscript)) {
-                            append("2")
-                        }
-                        append(" is a famous equation.")
-                    },
-                    style = MontserratFamily.body1()
-                )
-            }
-            item {
-                // text with spacing spacing
-                Text(
-                    text = "Text with letter spacing",
-                    style = MontserratFamily.body1().copy(
-                        letterSpacing = 2.sp
-                    )
-                )
-            }
-            item {
-                Text(
-                    text = "Text with background color",
-                    style = MontserratFamily.body1(),
-                    color = Color.White,
-                    modifier = Modifier
-                        .background(Color.Blue)
-                        .padding(4.dp)
-                )
-            }
-            item {
-                // cdata html string text
-                Text(
-                    text = AnnotatedString.Companion
-                        .fromHtml(
-                            htmlString = stringResource(R.string.cdata_string),
-                            linkStyles = TextLinkStyles(
-                                style = SpanStyle(
-                                    color = Color.Blue,
-                                    textDecoration = TextDecoration.Underline
-                                )
+            )
+        }
+        item {
+            Text(
+                text = "Text with background color",
+                style = MontserratFamily.body1(),
+                color = Color.White,
+                modifier = Modifier
+                    .background(Color.Blue)
+                    .padding(4.dp)
+            )
+        }
+        item {
+            // cdata html string text
+            Text(
+                text = AnnotatedString.Companion
+                    .fromHtml(
+                        htmlString = stringResource(R.string.cdata_string),
+                        linkStyles = TextLinkStyles(
+                            style = SpanStyle(
+                                color = Color.Blue,
+                                textDecoration = TextDecoration.Underline
                             )
                         )
-                )
-            }
+                    )
+            )
         }
     }
 }

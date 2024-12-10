@@ -1,6 +1,5 @@
-package edts.android.composesandbox.component.topbar
+package edts.android.composesandbox.screen.showcase.base
 
-import androidx.compose.foundation.Image
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
