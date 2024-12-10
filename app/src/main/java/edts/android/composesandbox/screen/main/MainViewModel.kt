@@ -39,6 +39,18 @@ class MainViewModel @Inject constructor(
         getUsername()
     }
 
+    fun setDialogVisibility(isVisible: Boolean){
+        _uiState.update {
+            it.copy(
+                isChangeNameDialogVisible = isVisible
+            )
+        }
+    }
+
+    fun saveUsername(value: String) = viewModelScope.launch {
+        dataStore?.saveUsername(value)
+    }
+
     private fun setUsername(value: String){
         _uiState.update {
             it.copy(

@@ -1,5 +1,6 @@
 package edts.android.composesandbox.screen.main
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -30,6 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lottiefiles.dotlottie.core.compose.ui.DotLottieAnimation
 import com.lottiefiles.dotlottie.core.util.DotLottieSource
 import edts.android.composesandbox.R
+import edts.android.composesandbox.component.ChangeNameDialogComp
 import edts.android.composesandbox.component.GreetingComp
 import edts.android.composesandbox.component.mainItem.MainItemComp
 import edts.android.composesandbox.component.search.SearchComp
@@ -70,7 +72,9 @@ fun MainScreen(
                     GreetingComp(
                         name = uiState.userName,
                         collapsedFraction = topAppBarState.collapsedFraction
-                    )
+                    ){
+                        viewModel.setDialogVisibility(true)
+                    }
                 },
                 actions = {
                     SearchComp(
@@ -130,6 +134,12 @@ fun MainScreen(
                     }
                 }
             }
+        }
+        AnimatedVisibility(uiState.isChangeNameDialogVisible) {
+            ChangeNameDialogComp(
+                onSave = { viewModel.saveUsername(it) },
+                onDismiss = { viewModel.setDialogVisibility(false) }
+            )
         }
     }
 }

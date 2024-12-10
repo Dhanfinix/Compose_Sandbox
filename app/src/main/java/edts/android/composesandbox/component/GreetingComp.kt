@@ -9,6 +9,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -23,7 +27,8 @@ import edts.android.composesandbox.ui.theme.headline3
 fun GreetingComp(
     modifier: Modifier = Modifier,
     name: String?,
-    collapsedFraction: Float    // 0F expand, 1F collapse
+    collapsedFraction: Float,    // 0F expand, 1F collapse
+    onClick: ()->Unit
 ) {
     val currentFraction by rememberUpdatedState(newValue = collapsedFraction)
     val isCollapsing = currentFraction < 1f
@@ -31,10 +36,17 @@ fun GreetingComp(
         modifier = modifier.fillMaxWidth()
     ) {
         AnimatedVisibility(isCollapsing) {
-            Text(
-                text = "Hello $name!",
-                style = MontserratFamily.body1()
-            )
+            SpannableText(
+                text = "Hello",
+                spanText = "$name!",
+                style = MontserratFamily.body1(),
+                spanStyle = TextLinkStyles(
+                    style = SpanStyle(
+                        fontWeight = FontWeight.Medium,
+                        textDecoration = TextDecoration.Underline
+                    )
+                )
+            ){ onClick() }
         }
         Text(
             text = stringResource(R.string.app_name),
@@ -55,7 +67,7 @@ fun GreetingPreview(
         GreetingComp(
             name = "Guest",
             collapsedFraction = collapsedFraction
-        )
+        ){}
     }
 }
 

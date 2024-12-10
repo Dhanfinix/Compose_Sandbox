@@ -19,5 +19,6 @@ data class MainScreenState(
         MainItemState(R.string.column, Destination.Column()),
         MainItemState(R.string.row, Destination.Row()),
         MainItemState(R.string.bottom_sheet, Destination.BottomSheet()),
-    )
+    ),
+    val isChangeNameDialogVisible: Boolean = false
 )
