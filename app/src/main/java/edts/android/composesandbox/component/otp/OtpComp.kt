@@ -49,6 +49,7 @@ fun OtpComp(
     modifier: Modifier = Modifier,
     uiState: OtpState,
     otpCount: Int = 4,
+    cursorIndicator: Boolean = true,
     showKeyboardInit: Boolean = true,
     onOtpTextChange: (String, Boolean) -> Unit
 ) {
@@ -90,7 +91,8 @@ fun OtpComp(
                         CharView(
                             index = index,
                             text = otpText,
-                            type = uiState.otpType
+                            type = uiState.otpType,
+                            cursorIndicator = cursorIndicator
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                     }
@@ -117,13 +119,15 @@ fun OtpComp(
 private fun CharView(
     index: Int,
     text: String,
-    type: OtpType
+    type: OtpType,
+    cursorIndicator: Boolean
 ) {
     val char = when {
         index == text.length -> ""
         index > text.length -> ""
         else -> text[index].toString()
     }
+    val isActive = (index == text.length) && cursorIndicator
     Text(
         modifier = Modifier
             .width(40.dp)
@@ -132,8 +136,8 @@ private fun CharView(
                 shape = RoundedCornerShape(8.dp)
             )
             .border(
-                width = 1.dp,
-                color = type.borderColor,
+                width = if (isActive) 3.dp else 1.dp,
+                color = if(isActive) type.activeBorderColor else type.borderColor,
                 shape = RoundedCornerShape(8.dp)
             )
             .padding(10.dp),

@@ -32,7 +32,6 @@ import androidx.compose.ui.text.style.BaselineShift
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import edts.android.composesandbox.R
@@ -43,6 +42,7 @@ import edts.android.composesandbox.ui.theme.InterFamily
 import edts.android.composesandbox.ui.theme.MontserratFamily
 import edts.android.composesandbox.ui.theme.Purple40
 import edts.android.composesandbox.ui.theme.body1
+import edts.android.composesandbox.util.LightDarkPreview
 
 @Composable
 fun TextScreen(
@@ -257,8 +257,7 @@ fun TextScreen(
     }
 }
 
-
-@Preview(showBackground = true)
+@LightDarkPreview
 @Composable
 private fun TextScreenPreview() {
     ComposeSandboxTheme {

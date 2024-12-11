@@ -10,11 +10,11 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import edts.android.composesandbox.R
+import edts.android.composesandbox.component.PasswordTextFieldComp
 import edts.android.composesandbox.component.counter_text_field.CounterTextField
 import edts.android.composesandbox.component.otp.OtpComp
 import edts.android.composesandbox.component.search.SearchComp
@@ -23,6 +23,7 @@ import edts.android.composesandbox.screen.showcase.base.ShowcaseBaseScreen
 import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
 import edts.android.composesandbox.ui.theme.InterFamily
 import edts.android.composesandbox.ui.theme.body1
+import edts.android.composesandbox.util.LightDarkPreview
 
 @Composable
 fun TextFieldScreen(
@@ -35,6 +36,7 @@ fun TextFieldScreen(
     ShowcaseBaseScreen(
         modifier = modifier,
         title = R.string.text_field,
+        horizontalAllignment = Alignment.CenterHorizontally,
         onBack = onBack
     ) {
         item {
@@ -87,17 +89,11 @@ fun TextFieldScreen(
         }
         item {
             // password text field
-            OutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
-                label = {
-                    Text("This is password text field")
-                },
-                visualTransformation = PasswordVisualTransformation(),
+            PasswordTextFieldComp(
+                label = "This is password text field",
                 value = uiState.passwordTextField,
-                onValueChange = {
-                    viewModel.setPassword(it)
-                }
-            )
+                mask = '\u2726'
+            ) { viewModel.setPassword(it) }
         }
         item {
             // Search text field
@@ -108,7 +104,6 @@ fun TextFieldScreen(
                     override fun onChange(value: String) {
                         viewModel.setSearchQuery(value)
                     }
-
                     override fun onClose() {}
                 }
             )
@@ -116,7 +111,6 @@ fun TextFieldScreen(
         item {
             // Pin text field
             OtpComp(
-                modifier = Modifier.fillMaxWidth(),
                 uiState = uiState.pinTextField,
                 showKeyboardInit = false
             ) {newValue, _->
@@ -133,10 +127,19 @@ fun TextFieldScreen(
                 viewModel.setCounter(it)
             }
         }
+        item {
+            // Disabled text field
+            OutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = "This text field is disabled",
+                onValueChange = {},
+                enabled = false
+            )
+        }
     }
 }
 
-@Preview
+@LightDarkPreview
 @Composable
 private fun TextFieldPreview() {
     ComposeSandboxTheme {

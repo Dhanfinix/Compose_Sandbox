@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import edts.android.composesandbox.R
-import edts.android.composesandbox.StringUtil.highlightQuery
+import edts.android.composesandbox.util.StringUtil.highlightQuery
 import edts.android.composesandbox.component.CardCornerCutComp
 import edts.android.composesandbox.navigation.Destination
 import edts.android.composesandbox.ui.theme.ComposeSandboxTheme

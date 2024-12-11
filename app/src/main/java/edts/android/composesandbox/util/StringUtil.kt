@@ -1,4 +1,4 @@
-package edts.android.composesandbox
+package edts.android.composesandbox.util
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString

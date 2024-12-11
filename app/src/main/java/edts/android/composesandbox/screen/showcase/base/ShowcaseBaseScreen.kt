@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults.exitUntilCollapsedScrollBehavior
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
@@ -19,6 +20,8 @@ import androidx.compose.ui.unit.dp
 fun ShowcaseBaseScreen(
     modifier: Modifier = Modifier,
     title: Int,
+    verticalArrangement : Arrangement.Vertical = Arrangement.spacedBy(8.dp),
+    horizontalAllignment: Alignment.Horizontal = Alignment.Start,
     onBack: ()->Unit,
     content: LazyListScope.()->Unit
 ) {
@@ -40,7 +43,8 @@ fun ShowcaseBaseScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = verticalArrangement,
+            horizontalAlignment = horizontalAllignment
         ) {
             content()
         }
