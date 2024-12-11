@@ -15,6 +15,7 @@ serialization-json = "1.7.3"
 dot-lottie = "0.6.1"
 datastore = "1.1.1"
 hilt-nav = "1.2.0"
+graphic-shapes = "1.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,7 @@ kotlin-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serial
 dot-lottie = { group = "com.github.LottieFiles", name = "dotlottie-android", version.ref = "dot-lottie" }
 datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 hilt-nav = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-nav" }
+graphic-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphic-shapes" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.dot.lottie)
     implementation(libs.datastore)
     implementation(libs.hilt.nav)
+    implementation(libs.graphic.shapes)
 }
 
 hilt {

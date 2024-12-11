@@ -15,6 +15,7 @@ import edts.android.composesandbox.screen.main.MainScreen
 import edts.android.composesandbox.screen.main.MainViewModel
 import edts.android.composesandbox.screen.showcase.button.ButtonScreen
 import edts.android.composesandbox.screen.showcase.button.ButtonViewModel
+import edts.android.composesandbox.screen.showcase.image.ImageScreen
 import edts.android.composesandbox.screen.showcase.text.TextScreen
 import edts.android.composesandbox.screen.showcase.textfield.TextFieldScreen
 import edts.android.composesandbox.screen.showcase.textfield.TextFieldViewModel
@@ -58,6 +59,10 @@ fun NavigationHost(
         composable<Destination.Button> {
             val viewModel = hiltViewModel<ButtonViewModel>()
             ButtonScreen(viewModel = viewModel) { navController.navigateUp() }
+            NavBackHandler(navController)
+        }
+        composable<Destination.Image> {
+            ImageScreen { navController.navigateUp() }
             NavBackHandler(navController)
         }
     }
