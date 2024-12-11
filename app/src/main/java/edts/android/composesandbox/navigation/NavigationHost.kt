@@ -13,6 +13,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edts.android.composesandbox.screen.main.MainScreen
 import edts.android.composesandbox.screen.main.MainViewModel
+import edts.android.composesandbox.screen.showcase.button.ButtonScreen
+import edts.android.composesandbox.screen.showcase.button.ButtonViewModel
 import edts.android.composesandbox.screen.showcase.text.TextScreen
 import edts.android.composesandbox.screen.showcase.textfield.TextFieldScreen
 import edts.android.composesandbox.screen.showcase.textfield.TextFieldViewModel
@@ -51,6 +53,11 @@ fun NavigationHost(
         composable<Destination.TextField> {
             val viewModel = hiltViewModel<TextFieldViewModel>()
             TextFieldScreen(viewModel = viewModel) { navController.navigateUp() }
+            NavBackHandler(navController)
+        }
+        composable<Destination.Button> {
+            val viewModel = hiltViewModel<ButtonViewModel>()
+            ButtonScreen(viewModel = viewModel) { navController.navigateUp() }
             NavBackHandler(navController)
         }
     }

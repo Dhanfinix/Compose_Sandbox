@@ -22,6 +22,7 @@ fun ShowcaseBaseScreen(
     title: Int,
     verticalArrangement : Arrangement.Vertical = Arrangement.spacedBy(8.dp),
     horizontalAllignment: Alignment.Horizontal = Alignment.Start,
+    fab: @Composable ()->Unit = {},
     onBack: ()->Unit,
     content: LazyListScope.()->Unit
 ) {
@@ -36,7 +37,8 @@ fun ShowcaseBaseScreen(
                 title = title,
                 scrollBehavior = scrollBehavior
             ){ onBack() }
-        }
+        },
+        floatingActionButton = fab
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
