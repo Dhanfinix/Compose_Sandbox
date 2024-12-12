@@ -61,7 +61,7 @@ fun NavigationHost(
             ButtonScreen(viewModel = viewModel) { navController.navigateUp() }
             NavBackHandler(navController)
         }
-        composable<Destination.Image> {
+        composable<Destination.ImageShape> {
             ImageScreen { navController.navigateUp() }
             NavBackHandler(navController)
         }

@@ -3,7 +3,7 @@
     <string name="text">Text</string>
     <string name="text_field">Text Field</string>
     <string name="button">Button</string>
-    <string name="image">Image</string>
+    <string name="image_shape">Image and Shape</string>
     <string name="dialog">Dialog</string>
     <string name="swipe_to_refresh">Swipe to Refresh</string>
     <string name="popup">Popup</string>

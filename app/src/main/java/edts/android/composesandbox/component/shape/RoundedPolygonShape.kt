@@ -27,14 +27,17 @@ class RoundedPolygonShape(
         layoutDirection: LayoutDirection,
         density: Density
     ): Outline {
-        path.rewind()
-        path = polygon.toPath().asComposePath()
-        matrix.reset()
-        val bounds = polygon.getBounds()
+        path.rewind()   // clear any previous drawings
+        path = polygon.toPath().asComposePath()     // convert shape to compose path
+        matrix.reset()  // clear previous transformations
+        val bounds = polygon.getBounds()    // get the bounds of the shape
         val maxDimension = max(bounds.width, bounds.height)
-        matrix.scale(size.width / maxDimension, size.height / maxDimension)
-        matrix.translate(-bounds.left, -bounds.top)
 
+        // scale the shape to fit the size
+        matrix.scale(size.width / maxDimension, size.height / maxDimension)
+        // move the shape to correct position
+        matrix.translate(-bounds.left, -bounds.top)
+        // apply transformation to the path
         path.transform(matrix)
         return Outline.Generic(path)
     }

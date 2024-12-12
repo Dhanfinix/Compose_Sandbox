@@ -1,10 +1,14 @@
 package edts.android.composesandbox.screen.showcase.image
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -28,8 +32,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.graphics.shapes.CornerRounding
+import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
+import androidx.graphics.shapes.star
 import edts.android.composesandbox.R
+import edts.android.composesandbox.component.shape.MorphPolygonShape
 import edts.android.composesandbox.component.shape.RoundedPolygonShape
 import edts.android.composesandbox.screen.showcase.base.ShowcaseBaseScreen
 import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
@@ -44,7 +51,7 @@ fun ImageScreen(
 ) {
     ShowcaseBaseScreen(
         modifier = modifier,
-        title = R.string.image,
+        title = R.string.image_shape,
         onBack = onBack
     ) {
         item {
@@ -120,6 +127,12 @@ fun ImageScreen(
                                 rounding = CornerRounding(0.2f)
                             )
                         )
+                        5 -> RoundedPolygonShape(
+                            RoundedPolygon.star(
+                                5,
+                                rounding = CornerRounding(20f)
+                            )
+                        )
                         else -> RectangleShape
                     }
                 }
@@ -136,10 +149,59 @@ fun ImageScreen(
                         clip = true
                     }
                     .clickable {
-                        if (counter <= 3) counter++
+                        if (counter <= 4) counter++
                         else counter = 0
                     }
             )
+        }
+        item {
+            val shapeA = remember {
+                RoundedPolygon(
+                    6,
+                    rounding = CornerRounding(0.2f)
+                )
+            }
+            val shapeB = remember {
+                RoundedPolygon.star(
+                    6,
+                    rounding = CornerRounding(0.1f)
+                )
+            }
+            val morph = remember {
+                Morph(shapeA, shapeB)
+            }
+            val interactionSource = remember {
+                MutableInteractionSource()
+            }
+            val isPressed by interactionSource.collectIsPressedAsState()
+            val animatedProgress = animateFloatAsState(
+                targetValue = if (isPressed) 1f else 0f,
+                label = "progress",
+                animationSpec = spring(dampingRatio = 0.4f, stiffness = Spring.StiffnessMedium)
+            )
+            Box {
+                Image(
+                    painter = painterResource(R.drawable.montains),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(200.dp)
+                        .graphicsLayer {
+                            shadowElevation = 10.dp.toPx()
+                            shape = MorphPolygonShape(morph, animatedProgress.value)
+                            clip = true
+                        }
+                        .clickable(
+                            interactionSource = interactionSource,
+                            indication = null
+                        ){}
+                )
+                Text(
+                    text = "Press and Hold",
+                    color = Color.Yellow,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
     }
 }

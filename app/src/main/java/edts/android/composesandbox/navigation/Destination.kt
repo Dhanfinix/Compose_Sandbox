@@ -25,8 +25,8 @@ sealed class Destination {
     ) : Destination()
 
     @Serializable
-    data class Image(
-        override val route: String = "ImageRoute"
+    data class ImageShape(
+        override val route: String = "ImageShapeRoute"
     ) : Destination()
 
     @Serializable
