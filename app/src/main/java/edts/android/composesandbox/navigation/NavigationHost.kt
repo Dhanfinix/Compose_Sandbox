@@ -15,6 +15,7 @@ import edts.android.composesandbox.screen.main.MainScreen
 import edts.android.composesandbox.screen.main.MainViewModel
 import edts.android.composesandbox.screen.showcase.button.ButtonScreen
 import edts.android.composesandbox.screen.showcase.button.ButtonViewModel
+import edts.android.composesandbox.screen.showcase.dialog.DialogScreen
 import edts.android.composesandbox.screen.showcase.image.ImageScreen
 import edts.android.composesandbox.screen.showcase.text.TextScreen
 import edts.android.composesandbox.screen.showcase.textfield.TextFieldScreen
@@ -63,6 +64,10 @@ fun NavigationHost(
         }
         composable<Destination.ImageShape> {
             ImageScreen { navController.navigateUp() }
+            NavBackHandler(navController)
+        }
+        composable<Destination.Dialog> {
+            DialogScreen { navController.navigateUp() }
             NavBackHandler(navController)
         }
     }
