@@ -16,6 +16,7 @@ dot-lottie = "0.6.1"
 datastore = "1.1.1"
 hilt-nav = "1.2.0"
 graphic-shapes = "1.0.1"
+coil = "2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +41,7 @@ dot-lottie = { group = "com.github.LottieFiles", name = "dotlottie-android", ver
 datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 hilt-nav = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-nav" }
 graphic-shapes = { group = "androidx.graphics", name = "graphics-shapes", version.ref = "graphic-shapes" }
+coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

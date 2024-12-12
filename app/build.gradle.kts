@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.datastore)
     implementation(libs.hilt.nav)
     implementation(libs.graphic.shapes)
+    implementation(libs.coil)
 }
 
 hilt {

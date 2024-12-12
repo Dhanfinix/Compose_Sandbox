@@ -10,6 +10,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
@@ -23,11 +24,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,7 +36,10 @@ import androidx.graphics.shapes.CornerRounding
 import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.star
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import edts.android.composesandbox.R
+import edts.android.composesandbox.component.GestureAsyncImage
 import edts.android.composesandbox.component.shape.MorphPolygonShape
 import edts.android.composesandbox.component.shape.RoundedPolygonShape
 import edts.android.composesandbox.screen.showcase.base.ShowcaseBaseScreen
@@ -49,6 +53,7 @@ fun ImageScreen(
     modifier: Modifier = Modifier,
     onBack: ()->Unit
 ) {
+    val context = LocalContext.current
     ShowcaseBaseScreen(
         modifier = modifier,
         title = R.string.image_shape,
@@ -202,6 +207,39 @@ fun ImageScreen(
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
+        }
+        item {
+            Text(
+                text = "Use common gesture",
+                style = MontserratFamily.subtitle2(),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+        }
+        item {
+            GestureAsyncImage(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                model = "https://lipsum.app/random/720x480",
+                contentScale = ContentScale.FillWidth
+            )
+        }
+        item {
+            Text(
+                text = "Load Image from URL",
+                style = MontserratFamily.subtitle2(),
+                modifier = Modifier.padding(top = 16.dp)
+            )
+        }
+        item {
+            AsyncImage(
+                model = ImageRequest.Builder(context)
+                    .data("https://lipsum.app/random/720x480")
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
+                placeholder = painterResource(R.drawable.image_placeholder),
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
         }
     }
 }
