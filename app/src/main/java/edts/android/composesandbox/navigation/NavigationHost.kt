@@ -16,6 +16,8 @@ import edts.android.composesandbox.screen.main.MainScreen
 import edts.android.composesandbox.screen.main.MainViewModel
 import edts.android.composesandbox.screen.showcase.button.ButtonScreen
 import edts.android.composesandbox.screen.showcase.button.ButtonViewModel
+import edts.android.composesandbox.screen.showcase.column.ColumnScreen
+import edts.android.composesandbox.screen.showcase.column.RegularColumnScreen
 import edts.android.composesandbox.screen.showcase.dialog.DialogScreen
 import edts.android.composesandbox.screen.showcase.image.ImageScreen
 import edts.android.composesandbox.screen.showcase.popup.PopupScreen
@@ -83,22 +85,35 @@ fun NavigationHost(
             PopupScreen { navController.navigateUp() }
             NavBackHandler(navController)
         }
+        composable<Destination.Column> {
+            ColumnScreen(navController = navController) { navController.navigateUp() }
+            NavBackHandler(navController)
+        }
+        composable<Destination.RegularColumn> {
+            RegularColumnScreen{ navController.navigateUp() }
+            NavBackHandler(navController, false)
+        }
     }
 }
 
 /**
- * This component is used to handle on back press
+ * This component is used to handle on back press to previous screen
  */
 @Composable
 fun NavBackHandler(
-    navController: NavHostController
+    navController: NavHostController,
+    isBackToHome: Boolean = true
 ) {
     BackHandler {
-        navController.navigate(Destination.Home()) {
-            popUpTo(navController.graph.findStartDestination().id)
-            // restore main screen state
-            restoreState = true
-            launchSingleTop = true
+        if (isBackToHome){
+            navController.navigate(Destination.Home()) {
+                popUpTo(navController.graph.findStartDestination().id)
+                // restore prev screen state
+                restoreState = true
+                launchSingleTop = true
+            }
+        } else {
+            navController.navigateUp()
         }
     }
 }

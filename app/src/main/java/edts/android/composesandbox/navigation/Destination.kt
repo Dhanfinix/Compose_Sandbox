@@ -50,6 +50,11 @@ sealed class Destination {
     ) : Destination()
 
     @Serializable
+    data class RegularColumn(
+        override val route: String = "RegularColumnRoute"
+    ) : Destination()
+
+    @Serializable
     data class Row(
         override val route: String = "RowRoute"
     ) : Destination()
@@ -57,5 +62,10 @@ sealed class Destination {
     @Serializable
     data class BottomSheet(
         override val route: String = "BottomSheetRoute"
+    ) : Destination()
+
+    @Serializable
+    data class Dropdown(
+        override val route: String = "DropdownRoute"
     ) : Destination()
 }
