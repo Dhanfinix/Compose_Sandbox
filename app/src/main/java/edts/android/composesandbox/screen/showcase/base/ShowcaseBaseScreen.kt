@@ -50,6 +50,7 @@ fun ShowcaseBaseScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .padding(horizontal = 16.dp)
                     .padding(innerPadding)
             ) {
                 boxContent()

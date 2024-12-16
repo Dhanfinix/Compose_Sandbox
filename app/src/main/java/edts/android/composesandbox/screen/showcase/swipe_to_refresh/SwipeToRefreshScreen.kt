@@ -47,7 +47,6 @@ fun SwipeToRefreshScreen(
         boxContent = {
             LazyColumn(
                 modifier = Modifier
-                    .padding(horizontal = 16.dp)
                     .pullRefresh(pullRefreshState)
             ) {
                 for (i in 0..30){

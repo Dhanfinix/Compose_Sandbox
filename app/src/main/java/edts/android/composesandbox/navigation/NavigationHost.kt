@@ -18,6 +18,7 @@ import edts.android.composesandbox.screen.showcase.button.ButtonScreen
 import edts.android.composesandbox.screen.showcase.button.ButtonViewModel
 import edts.android.composesandbox.screen.showcase.dialog.DialogScreen
 import edts.android.composesandbox.screen.showcase.image.ImageScreen
+import edts.android.composesandbox.screen.showcase.popup.PopupScreen
 import edts.android.composesandbox.screen.showcase.swipe_to_refresh.SwipeToRefreshScreen
 import edts.android.composesandbox.screen.showcase.swipe_to_refresh.SwipeToRefreshViewModel
 import edts.android.composesandbox.screen.showcase.text.TextScreen
@@ -76,6 +77,10 @@ fun NavigationHost(
         composable<Destination.SwipeToRefresh> {
             val viewModel = hiltViewModel<SwipeToRefreshViewModel>()
             SwipeToRefreshScreen(viewModel = viewModel) { navController.navigateUp()}
+            NavBackHandler(navController)
+        }
+        composable<Destination.Popup> {
+            PopupScreen { navController.navigateUp() }
             NavBackHandler(navController)
         }
     }
