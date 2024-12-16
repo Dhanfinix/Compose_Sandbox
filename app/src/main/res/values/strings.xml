@@ -5,7 +5,7 @@
     <string name="button">Button</string>
     <string name="image_shape">Image and Shape</string>
     <string name="dialog">Dialog</string>
-    <string name="swipe_to_refresh">Swipe to Refresh</string>
+    <string name="swipe_to_refresh">Swipe to Refresh and Shimmer</string>
     <string name="popup">Popup</string>
     <string name="column">Column</string>
     <string name="row">Row</string>

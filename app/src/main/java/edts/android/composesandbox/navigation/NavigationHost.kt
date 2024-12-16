@@ -11,12 +11,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.lifecycle.HiltViewModel
 import edts.android.composesandbox.screen.main.MainScreen
 import edts.android.composesandbox.screen.main.MainViewModel
 import edts.android.composesandbox.screen.showcase.button.ButtonScreen
 import edts.android.composesandbox.screen.showcase.button.ButtonViewModel
 import edts.android.composesandbox.screen.showcase.dialog.DialogScreen
 import edts.android.composesandbox.screen.showcase.image.ImageScreen
+import edts.android.composesandbox.screen.showcase.swipe_to_refresh.SwipeToRefreshScreen
+import edts.android.composesandbox.screen.showcase.swipe_to_refresh.SwipeToRefreshViewModel
 import edts.android.composesandbox.screen.showcase.text.TextScreen
 import edts.android.composesandbox.screen.showcase.textfield.TextFieldScreen
 import edts.android.composesandbox.screen.showcase.textfield.TextFieldViewModel
@@ -68,6 +71,11 @@ fun NavigationHost(
         }
         composable<Destination.Dialog> {
             DialogScreen { navController.navigateUp() }
+            NavBackHandler(navController)
+        }
+        composable<Destination.SwipeToRefresh> {
+            val viewModel = hiltViewModel<SwipeToRefreshViewModel>()
+            SwipeToRefreshScreen(viewModel = viewModel) { navController.navigateUp()}
             NavBackHandler(navController)
         }
     }

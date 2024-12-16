@@ -1,6 +1,8 @@
 package edts.android.composesandbox.screen.showcase.base
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,7 +26,8 @@ fun ShowcaseBaseScreen(
     horizontalAllignment: Alignment.Horizontal = Alignment.Start,
     fab: @Composable ()->Unit = {},
     onBack: ()->Unit,
-    content: LazyListScope.()->Unit
+    boxContent: (@Composable BoxScope.()->Unit)? = null,
+    content: (LazyListScope.()->Unit)? = null
 ) {
     val scrollBehavior = exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
@@ -40,15 +43,28 @@ fun ShowcaseBaseScreen(
         },
         floatingActionButton = fab
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp),
-            verticalArrangement = verticalArrangement,
-            horizontalAlignment = horizontalAllignment
-        ) {
-            content()
+        if (boxContent != null && content != null){
+            throw IllegalArgumentException("Only one of boxContent or content should be provided.")
+        }
+        if (boxContent != null){
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                boxContent()
+            }
+        } else if (content != null){
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(horizontal = 16.dp),
+                verticalArrangement = verticalArrangement,
+                horizontalAlignment = horizontalAllignment
+            ) {
+                content()
+            }
         }
     }
 }
