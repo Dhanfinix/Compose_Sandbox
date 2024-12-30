@@ -27,6 +27,7 @@ fun SortBottomSheetComp(
     onChanged: (SortType)->Unit,
     onDismiss: ()->Unit
 ) {
+    val sortList = listOf(SortType.CREATED, SortType.ALPHABET)
     AnimatedVisibility(showSort) {
         ModalBottomSheet(
             modifier = modifier,
@@ -42,25 +43,17 @@ fun SortBottomSheetComp(
                     style = MontserratFamily.subtitle1(),
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
                 )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().clickable { onChanged(SortType.CREATED) }
-                ) {
-                    RadioButton(
-                        selected = (sortType == SortType.CREATED),
-                        onClick = {}
-                    )
-                    Text(SortType.CREATED.toString())
-                }
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth().clickable { onChanged(SortType.ALPHABET) }
-                ){
-                    RadioButton(
-                        selected = (sortType == SortType.ALPHABET),
-                        onClick = {}
-                    )
-                    Text(SortType.ALPHABET.toString())
+                sortList.forEach {type->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth().clickable { onChanged(type) }
+                    ) {
+                        RadioButton(
+                            selected = (sortType == type),
+                            onClick = {}
+                        )
+                        Text(type.toString())
+                    }
                 }
             }
         }
