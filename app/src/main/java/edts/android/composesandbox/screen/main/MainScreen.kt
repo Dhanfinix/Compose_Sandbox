@@ -1,8 +1,6 @@
 package edts.android.composesandbox.screen.main
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,26 +20,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.lottiefiles.dotlottie.core.compose.ui.DotLottieAnimation
-import com.lottiefiles.dotlottie.core.util.DotLottieSource
 import edts.android.composesandbox.R
 import edts.android.composesandbox.component.ChangeNameDialogComp
+import edts.android.composesandbox.component.EmptyStateComp
 import edts.android.composesandbox.component.GreetingComp
+import edts.android.composesandbox.component.SortBottomSheetComp
 import edts.android.composesandbox.component.mainItem.MainItemComp
 import edts.android.composesandbox.component.search.SearchComp
 import edts.android.composesandbox.component.search.SearchDelegate
 import edts.android.composesandbox.navigation.Destination
 import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
-import edts.android.composesandbox.ui.theme.MontserratFamily
-import edts.android.composesandbox.ui.theme.subtitle1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,6 +49,7 @@ fun MainScreen(
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     var filteredItems by remember { mutableStateOf(uiState.menuItems) }
+    var showSort by remember { mutableStateOf(false) }
 
     LaunchedEffect(uiState.searchState.value, uiState.sortType) {
         filteredItems = uiState.menuItems.filter {
@@ -112,10 +107,7 @@ fun MainScreen(
             item {
                 Row(
                     modifier = Modifier.clickable {
-                        viewModel.changeSortType(
-                            if (uiState.sortType == SortType.CREATED) SortType.ALPHABET
-                            else SortType.CREATED
-                        )
+                        showSort = true
                     }
                 ) {
                     Icon(
@@ -141,32 +133,21 @@ fun MainScreen(
                     onNavigate(item.route)
                 }
             }
-
             item {
-                if (filteredItems.isEmpty()){
-                    Column(
-                        Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        DotLottieAnimation(
-                            source = DotLottieSource.Asset("empty.lottie"),
-                            autoplay = true,
-                            loop = true
-                        )
-                        Text(
-                            text = stringResource(R.string.not_found),
-                            style = MontserratFamily.subtitle1()
-                        )
-                    }
-                }
+                EmptyStateComp(isVisible = filteredItems.isEmpty())
             }
         }
-        AnimatedVisibility(uiState.isChangeNameDialogVisible) {
-            ChangeNameDialogComp(
-                onSave = { viewModel.saveUsername(it) },
-                onDismiss = { viewModel.setDialogVisibility(false) }
-            )
-        }
+        SortBottomSheetComp(
+            showSort = showSort,
+            sortType = uiState.sortType,
+            onChanged = { viewModel.changeSortType(it) },
+            onDismiss = {showSort = false}
+        )
+        ChangeNameDialogComp(
+            isVisible = uiState.isChangeNameDialogVisible,
+            onSave = { viewModel.saveUsername(it) },
+            onDismiss = { viewModel.setDialogVisibility(false) }
+        )
     }
 }
 
