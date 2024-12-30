@@ -64,4 +64,12 @@ class MainViewModel @Inject constructor(
             setUsername(name)
         } ?: setUsername("Datastore Null")
     }
+
+    fun changeSortType(sortType: SortType){
+        _uiState.update {
+            it.copy(
+                sortType = sortType
+            )
+        }
+    }
 }

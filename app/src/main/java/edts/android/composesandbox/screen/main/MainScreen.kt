@@ -1,12 +1,15 @@
 package edts.android.composesandbox.screen.main
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,11 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lottiefiles.dotlottie.core.compose.ui.DotLottieAnimation
 import com.lottiefiles.dotlottie.core.util.DotLottieSource
 import edts.android.composesandbox.R
@@ -54,11 +56,15 @@ fun MainScreen(
     val context = LocalContext.current
     var filteredItems by remember { mutableStateOf(uiState.menuItems) }
 
-    LaunchedEffect(uiState.searchState.value) {
+    LaunchedEffect(uiState.searchState.value, uiState.sortType) {
         filteredItems = uiState.menuItems.filter {
             context.resources.getString(it.title)
                 .lowercase()
                 .contains(uiState.searchState.value)
+        }.sortedBy {
+            if (uiState.sortType == SortType.ALPHABET)
+            context.resources.getString(it.title)
+            else ""
         }
     }
 
@@ -103,6 +109,25 @@ fun MainScreen(
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
         ) {
+            item {
+                Row(
+                    modifier = Modifier.clickable {
+                        viewModel.changeSortType(
+                            if (uiState.sortType == SortType.CREATED) SortType.ALPHABET
+                            else SortType.CREATED
+                        )
+                    }
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.baseline_sort_24),
+                        contentDescription = null
+                    )
+                    Text(
+                        text = uiState.sortType.toString()
+                    )
+                }
+            }
+
             itemsIndexed(filteredItems){index, item->
                 val itemModifier = if(index == 0)
                     Modifier.padding(top = 8.dp)
