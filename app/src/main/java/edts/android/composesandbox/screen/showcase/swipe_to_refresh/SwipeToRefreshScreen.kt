@@ -24,8 +24,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun SwipeToRefreshScreen(
     modifier: Modifier = Modifier,
-    viewModel: SwipeToRefreshViewModel,
-    onBack: ()->Unit
+    viewModel: SwipeToRefreshViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val pullRefreshState = rememberPullRefreshState(
@@ -43,7 +42,6 @@ fun SwipeToRefreshScreen(
     ShowcaseBaseScreen(
         modifier = modifier,
         title = R.string.swipe_to_refresh,
-        onBack = onBack,
         boxContent = {
             LazyColumn(
                 modifier = Modifier

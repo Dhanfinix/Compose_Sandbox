@@ -46,16 +46,14 @@ import edts.android.composesandbox.util.LightDarkPreview
 
 @Composable
 fun TextScreen(
-    modifier: Modifier = Modifier,
-    onBack: ()->Unit
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     var expandEllipsis by remember { mutableStateOf(false) }
 
     ShowcaseBaseScreen(
         modifier = modifier,
-        title = R.string.text,
-        onBack = onBack
+        title = R.string.text
     ){
         item {
             // normal text
@@ -261,6 +259,6 @@ fun TextScreen(
 @Composable
 private fun TextScreenPreview() {
     ComposeSandboxTheme {
-        TextScreen{}
+        TextScreen()
     }
 }

@@ -18,8 +18,7 @@ import edts.android.composesandbox.screen.showcase.base.ShowcaseBaseScreen
 
 @Composable
 fun RegularColumnScreen(
-    modifier: Modifier = Modifier,
-    onBack: ()->Unit
+    modifier: Modifier = Modifier
 ) {
     val dummyData = listOf(
         ColumnData(ColumnType.TEXT, "ColumnType.Text will create a text component"),
@@ -31,8 +30,7 @@ fun RegularColumnScreen(
     val context = LocalContext.current
     ShowcaseBaseScreen(
         title = R.string.regular_column,
-        modifier = modifier,
-        onBack = onBack
+        modifier = modifier
     ){
         item {
             Text("This app and it's components already use a lot of column and lazy column, " +

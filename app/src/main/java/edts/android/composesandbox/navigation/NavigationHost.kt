@@ -3,6 +3,7 @@ package edts.android.composesandbox.navigation
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,89 +32,62 @@ import edts.android.composesandbox.screen.showcase.textfield.TextFieldViewModel
 fun NavigationHost(
     modifier: Modifier = Modifier
 ) {
-    val navController = rememberNavController()
     val context = LocalContext.current
 
-    NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = Destination.Home()
-    ){
-        composable<Destination.Home> {
-            val mainViewModel = hiltViewModel<MainViewModel>()
-            MainScreen(viewModel = mainViewModel){
-                try {
-                    navController.navigate(it){
-                        popUpTo(navController.graph.findStartDestination().id){
-                            // save main screen state
-                            saveState = true
+    CompositionLocalProvider(
+        LocalNavController provides rememberNavController()
+    ) {
+        val navController = LocalNavController.current
+        NavHost(
+            modifier = modifier,
+            navController = navController,
+            startDestination = Destination.Home()
+        ){
+            composable<Destination.Home> {
+                val mainViewModel = hiltViewModel<MainViewModel>()
+                MainScreen(viewModel = mainViewModel){
+                    try {
+                        navController.navigate(it){
+                            popUpTo(navController.graph.findStartDestination().id){
+                                // save main screen state
+                                saveState = true
+                            }
                         }
+                    } catch (e: IllegalArgumentException){
+                        Toast.makeText(context, "Feature not ready yet", Toast.LENGTH_SHORT).show()
                     }
-                } catch (e: IllegalArgumentException){
-                    Toast.makeText(context, "Feature not ready yet", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-        composable<Destination.Text> {
-            TextScreen{ navController.navigateUp() }
-            NavBackHandler(navController)
-        }
-        composable<Destination.TextField> {
-            val viewModel = hiltViewModel<TextFieldViewModel>()
-            TextFieldScreen(viewModel = viewModel) { navController.navigateUp() }
-            NavBackHandler(navController)
-        }
-        composable<Destination.Button> {
-            val viewModel = hiltViewModel<ButtonViewModel>()
-            ButtonScreen(viewModel = viewModel) { navController.navigateUp() }
-            NavBackHandler(navController)
-        }
-        composable<Destination.ImageShape> {
-            ImageScreen { navController.navigateUp() }
-            NavBackHandler(navController)
-        }
-        composable<Destination.Dialog> {
-            DialogScreen { navController.navigateUp() }
-            NavBackHandler(navController)
-        }
-        composable<Destination.SwipeToRefresh> {
-            val viewModel = hiltViewModel<SwipeToRefreshViewModel>()
-            SwipeToRefreshScreen(viewModel = viewModel) { navController.navigateUp()}
-            NavBackHandler(navController)
-        }
-        composable<Destination.Popup> {
-            PopupScreen { navController.navigateUp() }
-            NavBackHandler(navController)
-        }
-        composable<Destination.Column> {
-            ColumnScreen(navController = navController) { navController.navigateUp() }
-            NavBackHandler(navController)
-        }
-        composable<Destination.RegularColumn> {
-            RegularColumnScreen{ navController.navigateUp() }
-            NavBackHandler(navController, false)
-        }
-    }
-}
-
-/**
- * This component is used to handle on back press to previous screen
- */
-@Composable
-fun NavBackHandler(
-    navController: NavHostController,
-    isBackToHome: Boolean = true
-) {
-    BackHandler {
-        if (isBackToHome){
-            navController.navigate(Destination.Home()) {
-                popUpTo(navController.graph.findStartDestination().id)
-                // restore prev screen state
-                restoreState = true
-                launchSingleTop = true
+            composable<Destination.Text> {
+                TextScreen()
             }
-        } else {
-            navController.navigateUp()
+            composable<Destination.TextField> {
+                val viewModel = hiltViewModel<TextFieldViewModel>()
+                TextFieldScreen(viewModel = viewModel)
+            }
+            composable<Destination.Button> {
+                val viewModel = hiltViewModel<ButtonViewModel>()
+                ButtonScreen(viewModel = viewModel)
+            }
+            composable<Destination.ImageShape> {
+                ImageScreen()
+            }
+            composable<Destination.Dialog> {
+                DialogScreen()
+            }
+            composable<Destination.SwipeToRefresh> {
+                val viewModel = hiltViewModel<SwipeToRefreshViewModel>()
+                SwipeToRefreshScreen(viewModel = viewModel)
+            }
+            composable<Destination.Popup> {
+                PopupScreen()
+            }
+            composable<Destination.Column> {
+                ColumnScreen()
+            }
+            composable<Destination.RegularColumn> {
+                RegularColumnScreen()
+            }
         }
     }
 }

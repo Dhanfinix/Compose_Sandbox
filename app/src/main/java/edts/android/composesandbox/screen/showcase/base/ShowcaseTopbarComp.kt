@@ -12,6 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import edts.android.composesandbox.R
+import edts.android.composesandbox.navigation.LocalNavController
 import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
 import edts.android.composesandbox.ui.theme.MontserratFamily
 import edts.android.composesandbox.ui.theme.headline3
@@ -22,8 +23,8 @@ fun ShowcaseTopbarComp(
     modifier: Modifier = Modifier,
     title: Int,
     scrollBehavior: TopAppBarScrollBehavior? = null,
-    onBack:()->Unit
 ) {
+    val currentNav = LocalNavController.current
     MediumTopAppBar(
         modifier= modifier,
         title = {
@@ -33,7 +34,7 @@ fun ShowcaseTopbarComp(
             )
         },
         navigationIcon = {
-            IconButton(onBack) {
+            IconButton({ currentNav.navigateUp() }) {
                 Icon(
                     painter = painterResource(R.drawable.baseline_arrow_back_24),
                     contentDescription = "Back"
@@ -51,6 +52,6 @@ private fun TopbarCompPreview() {
     ComposeSandboxTheme {
         ShowcaseTopbarComp(
             title = R.string.app_name
-        ) { }
+        )
     }
 }

@@ -31,8 +31,7 @@ import edts.android.composesandbox.util.LightDarkPreview
 @Composable
 fun ButtonScreen(
     modifier: Modifier = Modifier,
-    viewModel: ButtonViewModel,
-    onBack: ()->Unit
+    viewModel: ButtonViewModel
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
@@ -40,7 +39,6 @@ fun ButtonScreen(
     ShowcaseBaseScreen(
         modifier = modifier,
         title = R.string.button,
-        onBack = onBack,
         fab = {
             FloatingActionButton(
                 onClick = { showToast(context, "FAB") }
@@ -130,6 +128,6 @@ private fun showToast(
 @Composable
 private fun ButtonScreenPreview() {
     ComposeSandboxTheme {
-        ButtonScreen(viewModel = ButtonViewModel()) {  }
+        ButtonScreen(viewModel = ButtonViewModel())
     }
 }

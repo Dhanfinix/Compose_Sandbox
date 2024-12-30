@@ -28,16 +28,14 @@ import edts.android.composesandbox.util.LightDarkPreview
 @Composable
 fun TextFieldScreen(
     modifier: Modifier = Modifier,
-    viewModel: TextFieldViewModel,
-    onBack: ()->Unit
+    viewModel: TextFieldViewModel
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     ShowcaseBaseScreen(
         modifier = modifier,
         title = R.string.text_field,
-        horizontalAllignment = Alignment.CenterHorizontally,
-        onBack = onBack
+        horizontalAllignment = Alignment.CenterHorizontally
     ) {
         item {
             // normal text field
@@ -145,6 +143,6 @@ private fun TextFieldPreview() {
     ComposeSandboxTheme {
         TextFieldScreen(
             viewModel = TextFieldViewModel()
-        ) { }
+        )
     }
 }

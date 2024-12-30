@@ -50,14 +50,12 @@ import edts.android.composesandbox.util.LightDarkPreview
 
 @Composable
 fun ImageScreen(
-    modifier: Modifier = Modifier,
-    onBack: ()->Unit
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     ShowcaseBaseScreen(
         modifier = modifier,
-        title = R.string.image_shape,
-        onBack = onBack
+        title = R.string.image_shape
     ) {
         item {
             Text(
@@ -248,6 +246,6 @@ fun ImageScreen(
 @Composable
 private fun ImageScreenPreview() {
     ComposeSandboxTheme {
-        ImageScreen {}
+        ImageScreen()
     }
 }

@@ -25,15 +25,13 @@ import edts.android.composesandbox.screen.showcase.base.ShowcaseBaseScreen
 
 @Composable
 fun PopupScreen(
-    modifier: Modifier = Modifier,
-    onBack: ()->Unit
+    modifier: Modifier = Modifier
 ) {
     val btnModifier = Modifier
 
     ShowcaseBaseScreen(
         modifier = modifier,
         title = R.string.popup,
-        onBack = onBack,
         boxContent = {
             var parentPopup by remember { mutableStateOf(false) }
             var customParentPopup by remember { mutableStateOf(false) }

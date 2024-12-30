@@ -50,15 +50,13 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DialogScreen(
-    modifier: Modifier = Modifier,
-    onBack: ()->Unit
+    modifier: Modifier = Modifier
 ) {
     val btnModifier = Modifier.fillMaxWidth()
     val context = LocalContext.current
     ShowcaseBaseScreen(
         modifier = modifier,
-        title = R.string.dialog,
-        onBack = onBack
+        title = R.string.dialog
     ) {
         item {
             var showDialog by remember { mutableStateOf(false) }
@@ -226,6 +224,6 @@ fun formatDate(milliseconds: Long?): String {
 @Composable
 private fun DialogScreenPreview() {
     ComposeSandboxTheme {
-        DialogScreen {  }
+        DialogScreen()
     }
 }
