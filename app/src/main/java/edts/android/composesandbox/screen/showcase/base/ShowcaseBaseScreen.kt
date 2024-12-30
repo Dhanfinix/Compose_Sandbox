@@ -29,7 +29,7 @@ fun ShowcaseBaseScreen(
     modifier: Modifier = Modifier,
     title: Int,
     verticalArrangement : Arrangement.Vertical = Arrangement.spacedBy(8.dp),
-    horizontalAllignment: Alignment.Horizontal = Alignment.Start,
+    horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     fab: @Composable ()->Unit = {},
     boxContent: (@Composable BoxScope.()->Unit)? = null,
     content: (LazyListScope.()->Unit)? = null
@@ -51,23 +51,21 @@ fun ShowcaseBaseScreen(
         if (boxContent != null && content != null){
             throw IllegalArgumentException("Only one of boxContent or content should be provided.")
         }
+        val contentModifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding)
+            .padding(horizontal = 16.dp)
         if (boxContent != null){
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp)
-                    .padding(innerPadding)
+                modifier = contentModifier
             ) {
                 boxContent()
             }
         } else if (content != null){
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp),
+                modifier = contentModifier,
                 verticalArrangement = verticalArrangement,
-                horizontalAlignment = horizontalAllignment
+                horizontalAlignment = horizontalAlignment
             ) {
                 content()
             }

@@ -22,6 +22,7 @@ import edts.android.composesandbox.screen.showcase.column.RegularColumnScreen
 import edts.android.composesandbox.screen.showcase.dialog.DialogScreen
 import edts.android.composesandbox.screen.showcase.image.ImageScreen
 import edts.android.composesandbox.screen.showcase.popup.PopupScreen
+import edts.android.composesandbox.screen.showcase.row.RowScreen
 import edts.android.composesandbox.screen.showcase.swipe_to_refresh.SwipeToRefreshScreen
 import edts.android.composesandbox.screen.showcase.swipe_to_refresh.SwipeToRefreshViewModel
 import edts.android.composesandbox.screen.showcase.text.TextScreen
@@ -87,6 +88,9 @@ fun NavigationHost(
             }
             composable<Destination.RegularColumn> {
                 RegularColumnScreen()
+            }
+            composable<Destination.Row> {
+                RowScreen()
             }
         }
     }

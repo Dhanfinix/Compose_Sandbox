@@ -23,7 +23,7 @@ fun RegularColumnScreen(
     val dummyData = listOf(
         ColumnData(ColumnType.TEXT, "ColumnType.Text will create a text component"),
         ColumnData(ColumnType.IMAGE, "https://picsum.photos/id/237/720/480"),
-        ColumnData(ColumnType.TEXT, "ColumnType.IMAGE will create a image component like above and below"),
+        ColumnData(ColumnType.TEXT, "ColumnType.IMAGE will create an image component like above and below"),
         ColumnData(ColumnType.IMAGE, "https://picsum.photos/id/100/720/480"),
         ColumnData(ColumnType.BUTTON, "While, ColumnType.BUTTON will create a button component")
     )

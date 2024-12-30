@@ -35,7 +35,7 @@ fun TextFieldScreen(
     ShowcaseBaseScreen(
         modifier = modifier,
         title = R.string.text_field,
-        horizontalAllignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
             // normal text field
