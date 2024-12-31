@@ -21,11 +21,13 @@ fun PersistBottomSheetScreen(modifier: Modifier = Modifier) {
                 sheetContent = { TextScreen() },
                 sheetPeekHeight = 150.dp,
             ) {
-                Text("This bottom sheet have a long content and " +
+                Text(
+                    "This bottom sheet have a long content and " +
                         "cant be dismissed fully.\n" +
                         "Just for demo, below is TextScreen component, " +
-                        "Swipe to see..")
+                        "Swipe to see..",
+                )
             }
-        }
+        },
     )
 }

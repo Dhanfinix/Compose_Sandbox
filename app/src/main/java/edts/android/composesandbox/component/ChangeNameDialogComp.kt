@@ -35,7 +35,7 @@ fun ChangeNameDialogComp(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
     onSave: (String) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     var username by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }

@@ -46,28 +46,30 @@ fun BottomSheetScreen(modifier: Modifier = Modifier) {
 
             AnimatedVisibility(showModal2) {
                 ModalBottomSheet(
-                    onDismissRequest = {showModal2 = false},
+                    onDismissRequest = { showModal2 = false },
                 ) {
                     Text(
                         modifier = Modifier.padding(16.dp),
-                        text = "This is also modal bottom sheet, " +
+                        text =
+                            "This is also modal bottom sheet, " +
                                 "but created on top of previous one.\n" +
                                 "As you can see on code, even though the line is " +
                                 "added before first bottom sheet, it still appear " +
-                                "on top."
+                                "on top.",
                     )
                 }
             }
 
             AnimatedVisibility(showModal) {
                 ModalBottomSheet(
-                    onDismissRequest = {showModal = false},
+                    onDismissRequest = { showModal = false },
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp),
                     ) {
                         Text(
-                            text = "This is modal bottom sheet, it's temporary " +
+                            text =
+                                "This is modal bottom sheet, it's temporary " +
                                     "bottom sheet with dim background to focus user",
                         )
                         Button(
@@ -82,6 +84,6 @@ fun BottomSheetScreen(modifier: Modifier = Modifier) {
                     }
                 }
             }
-        }
+        },
     )
 }
