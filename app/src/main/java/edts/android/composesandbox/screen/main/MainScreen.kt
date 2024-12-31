@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import edts.android.composesandbox.R
 import edts.android.composesandbox.component.ChangeNameDialogComp
 import edts.android.composesandbox.component.EmptyStateComp
@@ -168,7 +169,7 @@ fun MainScreen(
 private fun MainScreenPreview() {
     ComposeSandboxTheme {
         MainScreen(
-            viewModel = MainViewModel(null),
+            viewModel = hiltViewModel<MainViewModel>(),
         ) {}
     }
 }

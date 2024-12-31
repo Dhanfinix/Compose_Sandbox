@@ -3,7 +3,8 @@ package edts.android.composesandbox.screen.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import edts.android.composesandbox.data.DataStorePreference
+import edts.android.composesandbox.data.SettingsDataStorePreference
+import edts.android.composesandbox.data.UserDataStorePreference
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class MainViewModel
     @Inject
     constructor(
-        private val dataStore: DataStorePreference?,
+        private val dataStore: UserDataStorePreference,
+        private val settingsDataStore: SettingsDataStorePreference,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(MainScreenState())
         val uiState: StateFlow<MainScreenState>
@@ -40,6 +42,7 @@ class MainViewModel
 
         init {
             getUsername()
+            getSortType()
         }
 
         fun setDialogVisibility(isVisible: Boolean) {
@@ -52,7 +55,7 @@ class MainViewModel
 
         fun saveUsername(value: String) =
             viewModelScope.launch {
-                dataStore?.saveUsername(value)
+                dataStore.saveUsername(value)
             }
 
         private fun setUsername(value: String) {
@@ -65,9 +68,20 @@ class MainViewModel
 
         private fun getUsername() =
             viewModelScope.launch {
-                dataStore?.getUsername()?.collectLatest { name ->
+                dataStore.getUsername().collectLatest { name ->
                     setUsername(name)
-                } ?: setUsername("Datastore Null")
+                }
+            }
+
+        private fun getSortType() =
+            viewModelScope.launch {
+                settingsDataStore.getSortType().collectLatest { ordinal->
+                    _uiState.update {
+                        it.copy(
+                            sortType = SortType.entries.toTypedArray().getOrNull(ordinal) ?: SortType.CREATED,
+                        )
+                    }
+                }
             }
 
         fun changeSortType(sortType: SortType) {
@@ -75,6 +89,9 @@ class MainViewModel
                 it.copy(
                     sortType = sortType,
                 )
+            }
+            viewModelScope.launch {
+                settingsDataStore.saveSortType(sortType)
             }
         }
     }

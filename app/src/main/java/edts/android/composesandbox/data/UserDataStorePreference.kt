@@ -9,24 +9,12 @@ import edts.android.composesandbox.data.PreferencesKeys.USERNAME
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "userdata")
+private val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(name = "userdata")
 
-class DataStorePreference(
+class UserDataStorePreference(
     context: Context,
-) {
-    private val dataStore = context.dataStore
-
-    private suspend fun <T> savePreference(
-        key: Preferences.Key<T>,
-        value: T,
-    ) {
-        dataStore.edit { preferences -> preferences[key] = value }
-    }
-
-    private fun <T> getPreference(
-        key: Preferences.Key<T>,
-        defaultValue: T,
-    ): Flow<T> = dataStore.data.map { preferences -> preferences[key] ?: defaultValue }
+) : BaseDataStorePreference() {
+    override val dataStore = context.userDataStore
 
     suspend fun saveUsername(name: String) = savePreference(USERNAME, name)
 

@@ -6,7 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import edts.android.composesandbox.data.DataStorePreference
+import edts.android.composesandbox.data.SettingsDataStorePreference
+import edts.android.composesandbox.data.UserDataStorePreference
 import javax.inject.Singleton
 
 @Module
@@ -16,5 +17,11 @@ object DataStoreModule {
     @Singleton
     fun provideDataStorePreference(
         @ApplicationContext context: Context,
-    ): DataStorePreference = DataStorePreference(context)
+    ): UserDataStorePreference = UserDataStorePreference(context)
+
+    @Provides
+    @Singleton
+    fun provideSettingsDataStorePreference(
+        @ApplicationContext context: Context,
+    ): SettingsDataStorePreference = SettingsDataStorePreference(context)
 }
