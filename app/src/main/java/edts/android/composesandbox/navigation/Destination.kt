@@ -68,9 +68,4 @@ sealed class Destination {
     data class PersistentBottomSheet(
         override val route: String = "PersistentBottomSheetRoute",
     ) : Destination()
-
-    @Serializable
-    data class Dropdown(
-        override val route: String = "DropdownRoute",
-    ) : Destination()
 }

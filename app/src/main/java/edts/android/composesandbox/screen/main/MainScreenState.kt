@@ -20,7 +20,6 @@ data class MainScreenState(
             MainItemState(R.string.column, Destination.Column()),
             MainItemState(R.string.row, Destination.Row()),
             MainItemState(R.string.bottom_sheet, Destination.BottomSheet()),
-            MainItemState(R.string.dropdown, Destination.Dropdown()),
         ),
     val isChangeNameDialogVisible: Boolean = false,
     val sortType: SortType = SortType.CREATED,

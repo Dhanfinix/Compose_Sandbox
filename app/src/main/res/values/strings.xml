@@ -12,7 +12,6 @@
     <string name="row">Row</string>
     <string name="bottom_sheet">Bottom Sheet</string>
     <string name="persist_bottom_sheet">Persistent Bottom Sheet</string>
-    <string name="dropdown">Dropdown</string>
     <string name="not_found">Component Not Found</string>
     <string name="cdata_string"><![CDATA[
         This string is from <b>CDATA HTML resource</b>!
