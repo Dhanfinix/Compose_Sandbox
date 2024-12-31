@@ -12,6 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edts.android.composesandbox.screen.main.MainScreen
 import edts.android.composesandbox.screen.main.MainViewModel
+import edts.android.composesandbox.screen.showcase.bottom_sheet.BottomSheetScreen
+import edts.android.composesandbox.screen.showcase.bottom_sheet.PersistBottomSheetScreen
 import edts.android.composesandbox.screen.showcase.button.ButtonScreen
 import edts.android.composesandbox.screen.showcase.button.ButtonViewModel
 import edts.android.composesandbox.screen.showcase.column.ColumnScreen
@@ -86,6 +88,12 @@ fun NavigationHost(modifier: Modifier = Modifier) {
             }
             composable<Destination.Row> {
                 RowScreen()
+            }
+            composable<Destination.BottomSheet> {
+                BottomSheetScreen()
+            }
+            composable<Destination.PersistentBottomSheet> {
+                PersistBottomSheetScreen()
             }
         }
     }
