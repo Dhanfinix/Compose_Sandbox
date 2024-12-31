@@ -31,12 +31,13 @@ fun SpannableText(
     text: String,
     spanText: String,
     afterSpanText: String? = "",
-    spanStyle: TextLinkStyles = TextLinkStyles(
-        SpanStyle(
-            color = Color.Blue,
-            textDecoration = TextDecoration.Underline
-        )
-    ),
+    spanStyle: TextLinkStyles =
+        TextLinkStyles(
+            SpanStyle(
+                color = Color.Blue,
+                textDecoration = TextDecoration.Underline,
+            ),
+        ),
     style: TextStyle = MontserratFamily.body1(),
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
@@ -45,18 +46,18 @@ fun SpannableText(
     onTextLayout: (TextLayoutResult) -> Unit = {},
     onClick: (String) -> Unit,
 ) {
-
-    val annotated = buildAnnotatedString {
-        append("$text ")
-        withLink(
-            LinkAnnotation.Clickable(spanText, spanStyle){
-                onClick(spanText)
-            },
-        ){
-            append(spanText)
+    val annotated =
+        buildAnnotatedString {
+            append("$text ")
+            withLink(
+                LinkAnnotation.Clickable(spanText, spanStyle) {
+                    onClick(spanText)
+                },
+            ) {
+                append(spanText)
+            }
+            append(" $afterSpanText")
         }
-        append(" $afterSpanText")
-    }
     Text(
         text = annotated,
         modifier = modifier,
@@ -65,7 +66,7 @@ fun SpannableText(
         overflow = overflow,
         maxLines = maxLines,
         onTextLayout = onTextLayout,
-        textAlign = textAlign
+        textAlign = textAlign,
     )
 }
 
@@ -77,7 +78,7 @@ private fun PreviewSpannableText() {
             SpannableText(
                 text = "Muhammad",
                 spanText = "Ramdhan",
-                afterSpanText = ", S.Pd"
+                afterSpanText = ", S.Pd",
             ) {}
         }
     }

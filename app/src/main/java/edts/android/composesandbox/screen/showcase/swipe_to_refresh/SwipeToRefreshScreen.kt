@@ -24,17 +24,18 @@ import kotlinx.coroutines.delay
 @Composable
 fun SwipeToRefreshScreen(
     modifier: Modifier = Modifier,
-    viewModel: SwipeToRefreshViewModel
+    viewModel: SwipeToRefreshViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val pullRefreshState = rememberPullRefreshState(
-        uiState.isRefreshing,
-        {
-            viewModel.setRefreshState(true)
-        }
-    )
+    val pullRefreshState =
+        rememberPullRefreshState(
+            uiState.isRefreshing,
+            {
+                viewModel.setRefreshState(true)
+            },
+        )
     LaunchedEffect(uiState.isRefreshing) {
-        if (uiState.isRefreshing){
+        if (uiState.isRefreshing) {
             delay(3000)
             viewModel.setRefreshState(false)
         }
@@ -44,29 +45,34 @@ fun SwipeToRefreshScreen(
         title = R.string.swipe_to_refresh,
         boxContent = {
             LazyColumn(
-                modifier = Modifier
-                    .pullRefresh(pullRefreshState)
+                modifier =
+                    Modifier
+                        .pullRefresh(pullRefreshState),
             ) {
-                for (i in 0..30){
-                    item{
-                        if (uiState.isRefreshing){
+                for (i in 0..30) {
+                    item {
+                        if (uiState.isRefreshing) {
                             ShimmerComp(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 8.dp),
-                                height = 20.dp
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 8.dp),
+                                height = 20.dp,
                             )
                         } else {
                             Text(
-                                text = if (i == 0)
-                                    "Scroll to top of the list to trigger swipe to refresh, " +
+                                text =
+                                    if (i == 0) {
+                                        "Scroll to top of the list to trigger swipe to refresh, " +
                                             "the loading will appear for 3 seconds." +
                                             "While loading, shimmer will appear to all items."
-                                else
-                                    "This is item number $i",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(bottom = 8.dp)
+                                    } else {
+                                        "This is item number $i"
+                                    },
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 8.dp),
                             )
                         }
                     }
@@ -76,9 +82,10 @@ fun SwipeToRefreshScreen(
             PullRefreshIndicator(
                 refreshing = uiState.isRefreshing,
                 state = pullRefreshState,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
+                modifier =
+                    Modifier
+                        .align(Alignment.TopCenter),
             )
-        }
+        },
     )
 }

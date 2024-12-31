@@ -24,9 +24,7 @@ import edts.android.composesandbox.R
 import edts.android.composesandbox.screen.showcase.base.ShowcaseBaseScreen
 
 @Composable
-fun PopupScreen(
-    modifier: Modifier = Modifier
-) {
+fun PopupScreen(modifier: Modifier = Modifier) {
     val btnModifier = Modifier
 
     ShowcaseBaseScreen(
@@ -36,12 +34,12 @@ fun PopupScreen(
             var parentPopup by remember { mutableStateOf(false) }
             var customParentPopup by remember { mutableStateOf(false) }
             LazyColumn(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
             ) {
                 item {
                     Button(
                         modifier = btnModifier,
-                        onClick = { parentPopup = true }
+                        onClick = { parentPopup = true },
                     ) {
                         Text("Parent Popup")
                     }
@@ -49,7 +47,7 @@ fun PopupScreen(
                 item {
                     Button(
                         modifier = btnModifier,
-                        onClick = { customParentPopup = true }
+                        onClick = { customParentPopup = true },
                     ) {
                         Text("Parent Popup with Custom Position")
                     }
@@ -58,12 +56,12 @@ fun PopupScreen(
                     var columnPopup by remember { mutableStateOf(false) }
                     Button(
                         modifier = btnModifier,
-                        onClick = { columnPopup = true }
+                        onClick = { columnPopup = true },
                     ) {
                         Text("On Column Popup")
                     }
                     AnimatedVisibility(columnPopup) {
-                        Popup( onDismissRequest = {columnPopup = false}) {
+                        Popup(onDismissRequest = { columnPopup = false }) {
                             Card {
                                 Text(
                                     text = "This popup is rendered inside column, that's why it's appear below button",
@@ -76,19 +74,20 @@ fun PopupScreen(
                     var paddingPopup by remember { mutableStateOf(false) }
                     Button(
                         modifier = btnModifier,
-                        onClick = { paddingPopup = true }
+                        onClick = { paddingPopup = true },
                     ) {
                         Text("On Popup with padding")
                     }
                     AnimatedVisibility(paddingPopup) {
                         Popup(
-                            onDismissRequest = {paddingPopup = false}
+                            onDismissRequest = { paddingPopup = false },
                         ) {
                             Card(
-                                modifier = Modifier.padding(horizontal = 16.dp)
+                                modifier = Modifier.padding(horizontal = 16.dp),
                             ) {
                                 Text(
-                                    text = "The popup before this appear outside the screen padding, " +
+                                    text =
+                                        "The popup before this appear outside the screen padding, " +
                                             "it because popup is rendered in separate layer." +
                                             "To solve it we can use padding modifier to match screen padding",
                                 )
@@ -100,39 +99,42 @@ fun PopupScreen(
 
             AnimatedVisibility(parentPopup) {
                 Popup(
-                    onDismissRequest = {parentPopup = false}
+                    onDismissRequest = { parentPopup = false },
                 ) {
                     Card {
                         Text(
-                            text = "By default popup position is on top left corner of the parent window"
+                            text = "By default popup position is on top left corner of the parent window",
                         )
                     }
                 }
             }
-            val positionProvider = remember { object : PopupPositionProvider{
-                override fun calculatePosition(
-                    anchorBounds: IntRect,
-                    windowSize: IntSize,
-                    layoutDirection: LayoutDirection,
-                    popupContentSize: IntSize
-                ): IntOffset {
-                    val xOffset = (windowSize.width - popupContentSize.width)/2
-                    val yOffset = (windowSize.height - popupContentSize.height)/2
-                    return IntOffset(xOffset, yOffset)
+            val positionProvider =
+                remember {
+                    object : PopupPositionProvider {
+                        override fun calculatePosition(
+                            anchorBounds: IntRect,
+                            windowSize: IntSize,
+                            layoutDirection: LayoutDirection,
+                            popupContentSize: IntSize,
+                        ): IntOffset {
+                            val xOffset = (windowSize.width - popupContentSize.width) / 2
+                            val yOffset = (windowSize.height - popupContentSize.height) / 2
+                            return IntOffset(xOffset, yOffset)
+                        }
+                    }
                 }
-            } }
             AnimatedVisibility(customParentPopup) {
                 Popup(
                     popupPositionProvider = positionProvider,
-                    onDismissRequest = {customParentPopup = false}
+                    onDismissRequest = { customParentPopup = false },
                 ) {
                     Card {
                         Text(
-                            text = "Custom position to center of the window"
+                            text = "Custom position to center of the window",
                         )
                     }
                 }
             }
-        }
+        },
     )
 }

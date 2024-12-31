@@ -14,7 +14,7 @@ import javax.inject.Singleton
 object DataStoreModule {
     @Provides
     @Singleton
-    fun provideDataStorePreference(@ApplicationContext context: Context): DataStorePreference {
-        return DataStorePreference(context)
-    }
+    fun provideDataStorePreference(
+        @ApplicationContext context: Context,
+    ): DataStorePreference = DataStorePreference(context)
 }

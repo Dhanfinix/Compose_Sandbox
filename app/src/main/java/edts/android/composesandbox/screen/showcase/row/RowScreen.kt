@@ -18,59 +18,61 @@ import edts.android.composesandbox.ui.theme.button
 import edts.android.composesandbox.ui.theme.caption
 
 @Composable
-fun RowScreen(
-    modifier: Modifier = Modifier
-) {
+fun RowScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     ShowcaseBaseScreen(
         modifier = modifier,
-        title = R.string.row
-    ){
+        title = R.string.row,
+    ) {
         item {
             LazyRow {
                 item {
                     Text(
                         "[Scroll horizontally]",
-                        style = MontserratFamily.body1()
+                        style = MontserratFamily.body1(),
                     )
                 }
                 item {
                     Text(
                         "Not much to say here, ",
-                        style = InterFamily.body2()
+                        style = InterFamily.body2(),
                     )
                 }
                 item {
                     Text(
                         "similar with column, ",
-                        style = MontserratFamily.caption()
+                        style = MontserratFamily.caption(),
                     )
                 }
                 item {
                     Text(
                         "just in horizontal arrangement",
-                        style = InterFamily.button())
+                        style = InterFamily.button(),
+                    )
                 }
             }
         }
         item {
             LazyRow {
-                val listImage = listOf(
-                    "https://picsum.photos/id/237/720/480",
-                    "https://picsum.photos/id/238/720/480",
-                    "https://picsum.photos/id/239/720/480",
-                    "https://picsum.photos/id/240/720/480",
-                    "https://picsum.photos/id/241/720/480"
-                )
+                val listImage =
+                    listOf(
+                        "https://picsum.photos/id/237/720/480",
+                        "https://picsum.photos/id/238/720/480",
+                        "https://picsum.photos/id/239/720/480",
+                        "https://picsum.photos/id/240/720/480",
+                        "https://picsum.photos/id/241/720/480",
+                    )
                 listImage.forEach {
                     item {
                         AsyncImage(
-                            model = ImageRequest.Builder(context)
-                                .data(it)
-                                .crossfade(true)
-                                .build(),
+                            model =
+                                ImageRequest
+                                    .Builder(context)
+                                    .data(it)
+                                    .crossfade(true)
+                                    .build(),
                             placeholder = painterResource(R.drawable.image_placeholder),
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
                 }

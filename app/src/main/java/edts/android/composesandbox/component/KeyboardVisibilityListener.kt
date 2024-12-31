@@ -17,30 +17,29 @@ import androidx.compose.ui.unit.dp
  */
 
 @Composable
-fun KeyboardVisibilityListener(
-    onKeyboardVisibilityChanged: (Boolean) -> Unit
-) {
+fun KeyboardVisibilityListener(onKeyboardVisibilityChanged: (Boolean) -> Unit) {
     val view = LocalView.current
     val density = LocalDensity.current
     var isKeyboardVisible by remember { mutableStateOf(false) }
 
     DisposableEffect(view) {
-        val listener = ViewTreeObserver.OnGlobalLayoutListener {
-            val rect = Rect()
-            view.getWindowVisibleDisplayFrame(rect)
-            val screenHeight = view.rootView.height
-            val keypadHeight = screenHeight - rect.bottom
+        val listener =
+            ViewTreeObserver.OnGlobalLayoutListener {
+                val rect = Rect()
+                view.getWindowVisibleDisplayFrame(rect)
+                val screenHeight = view.rootView.height
+                val keypadHeight = screenHeight - rect.bottom
 
-            // Convert pixels to dp
-            val keypadHeightDp = with(density) { keypadHeight.toDp() }
+                // Convert pixels to dp
+                val keypadHeightDp = with(density) { keypadHeight.toDp() }
 
-            val isVisible = keypadHeightDp > 100.dp // Arbitrary threshold for keyboard visibility
+                val isVisible = keypadHeightDp > 100.dp // Arbitrary threshold for keyboard visibility
 
-            if (isVisible != isKeyboardVisible) {
-                isKeyboardVisible = isVisible
-                onKeyboardVisibilityChanged(isVisible)
+                if (isVisible != isKeyboardVisible) {
+                    isKeyboardVisible = isVisible
+                    onKeyboardVisibilityChanged(isVisible)
+                }
             }
-        }
         view.viewTreeObserver.addOnGlobalLayoutListener(listener)
 
         onDispose {

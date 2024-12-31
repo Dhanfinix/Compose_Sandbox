@@ -26,22 +26,22 @@ fun ShowcaseTopbarComp(
 ) {
     val currentNav = LocalNavController.current
     MediumTopAppBar(
-        modifier= modifier,
+        modifier = modifier,
         title = {
             Text(
                 text = stringResource(title),
-                style = MontserratFamily.headline3()
+                style = MontserratFamily.headline3(),
             )
         },
         navigationIcon = {
             IconButton({ currentNav.navigateUp() }) {
                 Icon(
                     painter = painterResource(R.drawable.baseline_arrow_back_24),
-                    contentDescription = "Back"
+                    contentDescription = "Back",
                 )
             }
         },
-        scrollBehavior = scrollBehavior
+        scrollBehavior = scrollBehavior,
     )
 }
 
@@ -51,7 +51,7 @@ fun ShowcaseTopbarComp(
 private fun TopbarCompPreview() {
     ComposeSandboxTheme {
         ShowcaseTopbarComp(
-            title = R.string.app_name
+            title = R.string.app_name,
         )
     }
 }

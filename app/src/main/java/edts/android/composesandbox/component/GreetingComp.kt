@@ -27,33 +27,37 @@ import edts.android.composesandbox.ui.theme.headline3
 fun GreetingComp(
     modifier: Modifier = Modifier,
     name: String?,
-    collapsedFraction: Float,    // 0F expand, 1F collapse
-    onClick: ()->Unit
+    collapsedFraction: Float, // 0F expand, 1F collapse
+    onClick: () -> Unit,
 ) {
     val currentFraction by rememberUpdatedState(newValue = collapsedFraction)
     val isCollapsing = currentFraction < 1f
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         AnimatedVisibility(isCollapsing) {
             SpannableText(
                 text = "Hello",
                 spanText = "$name!",
                 style = MontserratFamily.body1(),
-                spanStyle = TextLinkStyles(
-                    style = SpanStyle(
-                        fontWeight = FontWeight.Medium,
-                        textDecoration = TextDecoration.Underline
-                    )
-                )
-            ){ onClick() }
+                spanStyle =
+                    TextLinkStyles(
+                        style =
+                            SpanStyle(
+                                fontWeight = FontWeight.Medium,
+                                textDecoration = TextDecoration.Underline,
+                            ),
+                    ),
+            ) { onClick() }
         }
         Text(
             text = stringResource(R.string.app_name),
-            style = if (isCollapsing)
-                MontserratFamily.headline1()
-            else
-                MontserratFamily.headline3()
+            style =
+                if (isCollapsing) {
+                    MontserratFamily.headline1()
+                } else {
+                    MontserratFamily.headline3()
+                },
         )
     }
 }
@@ -61,18 +65,20 @@ fun GreetingComp(
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview(
-    @PreviewParameter(GreetingParamProvider::class) collapsedFraction: Float
+    @PreviewParameter(GreetingParamProvider::class) collapsedFraction: Float,
 ) {
     ComposeSandboxTheme {
         GreetingComp(
             name = "Guest",
-            collapsedFraction = collapsedFraction
-        ){}
+            collapsedFraction = collapsedFraction,
+        ) {}
     }
 }
 
-private class GreetingParamProvider: PreviewParameterProvider<Float>{
-    override val values = sequenceOf(
-        0F, 1F
-    )
+private class GreetingParamProvider : PreviewParameterProvider<Float> {
+    override val values =
+        sequenceOf(
+            0F,
+            1F,
+        )
 }

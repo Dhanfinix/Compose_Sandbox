@@ -2,12 +2,6 @@ package edts.android.composesandbox.component.search
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -52,7 +46,7 @@ fun SearchComp(
     modifier: Modifier = Modifier,
     state: SearchState,
     hint: String = "Input search keyword",
-    delegate: SearchDelegate? = null
+    delegate: SearchDelegate? = null,
 ) {
     var isExpanded by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -60,14 +54,14 @@ fun SearchComp(
     var isKeyboardVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(isExpanded) {
-        if (isExpanded){
+        if (isExpanded) {
             focusRequester.requestFocus()
         }
     }
 
     KeyboardVisibilityListener {
         isKeyboardVisible = it
-        if (!isKeyboardVisible){
+        if (!isKeyboardVisible) {
             delegate?.onClose()
             isExpanded = false
         }
@@ -75,53 +69,57 @@ fun SearchComp(
 
     Box {
         AnimatedContent(isExpanded, label = "search") {
-            if (!it){
-                SearchButtonComp{ isExpanded = !isExpanded }
+            if (!it) {
+                SearchButtonComp { isExpanded = !isExpanded }
             } else {
                 BasicTextField(
-                    modifier = modifier
-                        .focusRequester(focusRequester)
-                        .background(Color.White, RoundedCornerShape(100)),
+                    modifier =
+                        modifier
+                            .focusRequester(focusRequester)
+                            .background(Color.White, RoundedCornerShape(100)),
                     value = state.value,
                     textStyle = MontserratFamily.body1(),
-                    onValueChange = {newValue->
+                    onValueChange = { newValue ->
                         delegate?.onChange(newValue)
                     },
                     maxLines = 1,
                     singleLine = true,
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = { focusManager.clearFocus() }
-                    ),
-                    decorationBox = {innerTextField->
+                    keyboardOptions =
+                        KeyboardOptions.Default.copy(
+                            imeAction = ImeAction.Done,
+                        ),
+                    keyboardActions =
+                        KeyboardActions(
+                            onDone = { focusManager.clearFocus() },
+                        ),
+                    decorationBox = { innerTextField ->
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            SearchButtonComp{ isExpanded = !isExpanded }
+                            SearchButtonComp { isExpanded = !isExpanded }
                             Box(
-                                Modifier.weight(1f)
+                                Modifier.weight(1f),
                             ) {
                                 androidx.compose.animation
-                                .AnimatedVisibility(
-                                   visible = state.value.isEmpty()
-                                ) {
-                                    Text(
-                                        text = hint,
-                                        style = MontserratFamily.body1(),
-                                        color = Color.LightGray
-                                    )
-                                }
+                                    .AnimatedVisibility(
+                                        visible = state.value.isEmpty(),
+                                    ) {
+                                        Text(
+                                            text = hint,
+                                            style = MontserratFamily.body1(),
+                                            color = Color.LightGray,
+                                        )
+                                    }
                                 innerTextField()
                             }
 
                             AnimatedVisibility(state.value.isNotEmpty()) {
                                 IconButton(
                                     modifier = Modifier.padding(horizontal = 4.dp),
-                                    onClick = { delegate?.onChange("") }
+                                    onClick = { delegate?.onChange("") },
                                 ) {
                                     Image(
                                         painter = painterResource(R.drawable.baseline_close_24),
@@ -131,7 +129,7 @@ fun SearchComp(
                                 }
                             }
                         }
-                    }
+                    },
                 )
             }
         }
@@ -139,16 +137,14 @@ fun SearchComp(
 }
 
 @Composable
-private fun SearchButtonComp(
-    onClick: ()-> Unit
-) {
+private fun SearchButtonComp(onClick: () -> Unit) {
     IconButton(
         modifier = Modifier.padding(horizontal = 4.dp),
-        onClick = { onClick() }
+        onClick = { onClick() },
     ) {
         Icon(
             painter = painterResource(R.drawable.baseline_search_24),
-            contentDescription = "Search"
+            contentDescription = "Search",
         )
     }
 }
@@ -157,18 +153,19 @@ private fun SearchButtonComp(
 @Composable
 private fun SearchCompPreview(
     @PreviewParameter(SearchParamProvider::class)
-    inputText: String
+    inputText: String,
 ) {
     ComposeSandboxTheme {
         SearchComp(
-            state = SearchState(value = inputText)
+            state = SearchState(value = inputText),
         )
     }
 }
 
-private class SearchParamProvider() : PreviewParameterProvider<String>{
-    override val values = sequenceOf(
-        "",
-        "Button"
-    )
+private class SearchParamProvider : PreviewParameterProvider<String> {
+    override val values =
+        sequenceOf(
+            "",
+            "Button",
+        )
 }

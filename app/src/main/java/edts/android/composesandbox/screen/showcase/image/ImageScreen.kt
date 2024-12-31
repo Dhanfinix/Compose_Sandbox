@@ -49,26 +49,25 @@ import edts.android.composesandbox.ui.theme.subtitle2
 import edts.android.composesandbox.util.LightDarkPreview
 
 @Composable
-fun ImageScreen(
-    modifier: Modifier = Modifier
-) {
+fun ImageScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     ShowcaseBaseScreen(
         modifier = modifier,
-        title = R.string.image_shape
+        title = R.string.image_shape,
     ) {
         item {
             Text(
-                text = "Local Image\n" +
+                text =
+                    "Local Image\n" +
                         "Touch to apply an effect",
-                style = MontserratFamily.subtitle2()
+                style = MontserratFamily.subtitle2(),
             )
         }
         item {
             var counter by remember { mutableIntStateOf(0) }
-            val scaleMode by remember(counter){
+            val scaleMode by remember(counter) {
                 derivedStateOf {
-                    when(counter){
+                    when (counter) {
                         0 -> ContentScale.FillBounds
                         1 -> ContentScale.Inside
                         2 -> ContentScale.FillWidth
@@ -81,7 +80,7 @@ fun ImageScreen(
             }
             val scaleName by remember(scaleMode) {
                 derivedStateOf {
-                    when(scaleMode){
+                    when (scaleMode) {
                         ContentScale.FillBounds -> "FillBounds"
                         ContentScale.Inside -> "Inside"
                         ContentScale.FillWidth -> "FillWidth"
@@ -98,19 +97,23 @@ fun ImageScreen(
                     painter = painterResource(R.drawable.montains),
                     contentDescription = null,
                     contentScale = scaleMode,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.Gray)
-                        .clickable {
-                            if (counter <= 5) counter++
-                            else counter = 0
-                        }
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .background(Color.Gray)
+                            .clickable {
+                                if (counter <= 5) {
+                                    counter++
+                                } else {
+                                    counter = 0
+                                }
+                            },
                 )
                 Text(
                     text = scaleName,
                     color = Color.Yellow,
                     textAlign = TextAlign.End,
-                    modifier = Modifier.align(Alignment.BottomEnd)
+                    modifier = Modifier.align(Alignment.BottomEnd),
                 )
             }
         }
@@ -119,23 +122,25 @@ fun ImageScreen(
 
             val shape by remember(counter) {
                 derivedStateOf {
-                    when(counter){
+                    when (counter) {
                         0 -> RectangleShape
                         1 -> RoundedCornerShape(20.dp)
                         2 -> CircleShape
                         3 -> CutCornerShape(50)
-                        4 -> RoundedPolygonShape(
-                            RoundedPolygon(
-                                numVertices = 6,
-                                rounding = CornerRounding(0.2f)
+                        4 ->
+                            RoundedPolygonShape(
+                                RoundedPolygon(
+                                    numVertices = 6,
+                                    rounding = CornerRounding(0.2f),
+                                ),
                             )
-                        )
-                        5 -> RoundedPolygonShape(
-                            RoundedPolygon.star(
-                                5,
-                                rounding = CornerRounding(20f)
+                        5 ->
+                            RoundedPolygonShape(
+                                RoundedPolygon.star(
+                                    5,
+                                    rounding = CornerRounding(20f),
+                                ),
                             )
-                        )
                         else -> RectangleShape
                     }
                 }
@@ -144,65 +149,73 @@ fun ImageScreen(
                 painter = painterResource(R.drawable.montains),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(200.dp)
-                    .graphicsLayer {
-                        shadowElevation = 10.dp.toPx()
-                        this.shape = shape
-                        clip = true
-                    }
-                    .clickable {
-                        if (counter <= 4) counter++
-                        else counter = 0
-                    }
+                modifier =
+                    Modifier
+                        .size(200.dp)
+                        .graphicsLayer {
+                            shadowElevation = 10.dp.toPx()
+                            this.shape = shape
+                            clip = true
+                        }.clickable {
+                            if (counter <= 4) {
+                                counter++
+                            } else {
+                                counter = 0
+                            }
+                        },
             )
         }
         item {
-            val shapeA = remember {
-                RoundedPolygon(
-                    6,
-                    rounding = CornerRounding(0.2f)
-                )
-            }
-            val shapeB = remember {
-                RoundedPolygon.star(
-                    6,
-                    rounding = CornerRounding(0.1f)
-                )
-            }
-            val morph = remember {
-                Morph(shapeA, shapeB)
-            }
-            val interactionSource = remember {
-                MutableInteractionSource()
-            }
+            val shapeA =
+                remember {
+                    RoundedPolygon(
+                        6,
+                        rounding = CornerRounding(0.2f),
+                    )
+                }
+            val shapeB =
+                remember {
+                    RoundedPolygon.star(
+                        6,
+                        rounding = CornerRounding(0.1f),
+                    )
+                }
+            val morph =
+                remember {
+                    Morph(shapeA, shapeB)
+                }
+            val interactionSource =
+                remember {
+                    MutableInteractionSource()
+                }
             val isPressed by interactionSource.collectIsPressedAsState()
-            val animatedProgress = animateFloatAsState(
-                targetValue = if (isPressed) 1f else 0f,
-                label = "progress",
-                animationSpec = spring(dampingRatio = 0.4f, stiffness = Spring.StiffnessMedium)
-            )
+            val animatedProgress =
+                animateFloatAsState(
+                    targetValue = if (isPressed) 1f else 0f,
+                    label = "progress",
+                    animationSpec = spring(dampingRatio = 0.4f, stiffness = Spring.StiffnessMedium),
+                )
             Box {
                 Image(
                     painter = painterResource(R.drawable.montains),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size(200.dp)
-                        .graphicsLayer {
-                            shadowElevation = 10.dp.toPx()
-                            shape = MorphPolygonShape(morph, animatedProgress.value)
-                            clip = true
-                        }
-                        .clickable(
-                            interactionSource = interactionSource,
-                            indication = null
-                        ){}
+                    modifier =
+                        Modifier
+                            .size(200.dp)
+                            .graphicsLayer {
+                                shadowElevation = 10.dp.toPx()
+                                shape = MorphPolygonShape(morph, animatedProgress.value)
+                                clip = true
+                            }.clickable(
+                                interactionSource = interactionSource,
+                                indication = null,
+                            ) {},
                 )
                 Text(
                     text = "Press and Hold",
                     color = Color.Yellow,
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
                 )
             }
         }
@@ -210,33 +223,36 @@ fun ImageScreen(
             Text(
                 text = "Use common gesture",
                 style = MontserratFamily.subtitle2(),
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp),
             )
         }
         item {
             GestureAsyncImage(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
                 model = "https://lipsum.app/random/720x480",
-                contentScale = ContentScale.FillWidth
+                contentScale = ContentScale.FillWidth,
             )
         }
         item {
             Text(
                 text = "Load Image from URL",
                 style = MontserratFamily.subtitle2(),
-                modifier = Modifier.padding(top = 16.dp)
+                modifier = Modifier.padding(top = 16.dp),
             )
         }
         item {
             AsyncImage(
-                model = ImageRequest.Builder(context)
-                    .data("https://lipsum.app/random/720x480")
-                    .crossfade(true)
-                    .build(),
+                model =
+                    ImageRequest
+                        .Builder(context)
+                        .data("https://lipsum.app/random/720x480")
+                        .crossfade(true)
+                        .build(),
                 contentDescription = null,
                 placeholder = painterResource(R.drawable.image_placeholder),
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp),
             )
         }
     }

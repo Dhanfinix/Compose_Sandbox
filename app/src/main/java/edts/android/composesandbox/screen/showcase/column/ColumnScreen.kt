@@ -13,20 +13,19 @@ import edts.android.composesandbox.navigation.LocalNavController
 import edts.android.composesandbox.screen.showcase.base.ShowcaseBaseScreen
 
 @Composable
-fun ColumnScreen(
-    modifier: Modifier = Modifier
-) {
-    val columnBtn = listOf(
-        MainItemState(R.string.regular_column, Destination.RegularColumn())
-    )
+fun ColumnScreen(modifier: Modifier = Modifier) {
+    val columnBtn =
+        listOf(
+            MainItemState(R.string.regular_column, Destination.RegularColumn()),
+        )
     val currentNav = LocalNavController.current
     ShowcaseBaseScreen(
         modifier = modifier,
         title = R.string.column,
-    ){
-        items(columnBtn){
+    ) {
+        items(columnBtn) {
             Button(
-                onClick = { currentNav.navigate(it.route) }
+                onClick = { currentNav.navigate(it.route) },
             ) {
                 Text(stringResource(it.title))
             }

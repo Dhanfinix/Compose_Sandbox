@@ -28,44 +28,46 @@ import edts.android.composesandbox.navigation.LocalNavController
 fun ShowcaseBaseScreen(
     modifier: Modifier = Modifier,
     title: Int,
-    verticalArrangement : Arrangement.Vertical = Arrangement.spacedBy(8.dp),
+    verticalArrangement: Arrangement.Vertical = Arrangement.spacedBy(8.dp),
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
-    fab: @Composable ()->Unit = {},
-    boxContent: (@Composable BoxScope.()->Unit)? = null,
-    content: (LazyListScope.()->Unit)? = null
+    fab: @Composable () -> Unit = {},
+    boxContent: (@Composable BoxScope.() -> Unit)? = null,
+    content: (LazyListScope.() -> Unit)? = null,
 ) {
     val scrollBehavior = exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
     Scaffold(
-        modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .fillMaxSize(),
+        modifier =
+            modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .fillMaxSize(),
         topBar = {
             ShowcaseTopbarComp(
                 title = title,
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
             )
         },
-        floatingActionButton = fab
+        floatingActionButton = fab,
     ) { innerPadding ->
-        if (boxContent != null && content != null){
+        if (boxContent != null && content != null) {
             throw IllegalArgumentException("Only one of boxContent or content should be provided.")
         }
-        val contentModifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding)
-            .padding(horizontal = 16.dp)
-        if (boxContent != null){
+        val contentModifier =
+            Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp)
+        if (boxContent != null) {
             Box(
-                modifier = contentModifier
+                modifier = contentModifier,
             ) {
                 boxContent()
             }
-        } else if (content != null){
+        } else if (content != null) {
             LazyColumn(
                 modifier = contentModifier,
                 verticalArrangement = verticalArrangement,
-                horizontalAlignment = horizontalAlignment
+                horizontalAlignment = horizontalAlignment,
             ) {
                 content()
             }
@@ -84,8 +86,10 @@ fun NavBackHandler() {
     val context = LocalContext.current
     BackHandler {
         val previousBackStackEntry = navController.previousBackStackEntry
-        if (previousBackStackEntry?.destination?.route?.
-            contains(Destination.Home()::class.qualifiedName ?: "") == true
+        if (previousBackStackEntry
+                ?.destination
+                ?.route
+                ?.contains(Destination.Home()::class.qualifiedName ?: "") == true
         ) {
             Toast.makeText(context, "Back Home", Toast.LENGTH_SHORT).show()
             navController.navigate(Destination.Home()) {

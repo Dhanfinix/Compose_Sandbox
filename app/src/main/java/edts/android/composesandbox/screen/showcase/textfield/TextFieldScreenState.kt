@@ -11,5 +11,5 @@ data class TextFieldScreenState(
     val passwordTextField: String = "",
     val searchState: SearchState = SearchState(),
     val pinTextField: OtpState = OtpState(),
-    val counterTextField: CounterTextFieldState = CounterTextFieldState()
+    val counterTextField: CounterTextFieldState = CounterTextFieldState(),
 )

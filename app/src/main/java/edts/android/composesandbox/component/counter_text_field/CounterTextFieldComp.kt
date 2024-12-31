@@ -12,7 +12,7 @@ fun CounterTextField(
     modifier: Modifier = Modifier,
     label: String,
     uiState: CounterTextFieldState,
-    onValueChange: (String)->Unit
+    onValueChange: (String) -> Unit,
 ) {
     TextField(
         modifier = modifier,
@@ -25,8 +25,8 @@ fun CounterTextField(
             Text(
                 text = "${uiState.counter}/${uiState.maxChar}",
                 modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.End
+                textAlign = TextAlign.End,
             )
-        }
+        },
     )
 }

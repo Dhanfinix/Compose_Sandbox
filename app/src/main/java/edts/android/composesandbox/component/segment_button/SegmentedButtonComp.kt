@@ -21,47 +21,46 @@ import edts.android.composesandbox.util.LightDarkPreview
 fun SegmentedButtonComp(
     modifier: Modifier = Modifier,
     uiState: SegmentedState,
-    onChecked: (Int)->Unit
+    onChecked: (Int) -> Unit,
 ) {
-    if (uiState.isMulti){
+    if (uiState.isMulti) {
         MultiChoiceSegmentedButtonRow(modifier) {
             uiState.options.fastForEachIndexed { index, segmentedData ->
                 SegmentedButton(
                     shape = SegmentedButtonDefaults.itemShape(index, uiState.options.size),
                     icon = {
-                        SegmentedButtonDefaults.Icon(segmentedData.checked){
+                        SegmentedButtonDefaults.Icon(segmentedData.checked) {
                             Icon(
                                 painter = painterResource(segmentedData.icon),
                                 contentDescription = null,
-                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize),
                             )
                         }
                     },
                     onCheckedChange = { onChecked(index) },
-                    checked = segmentedData.checked
+                    checked = segmentedData.checked,
                 ) {
                     Text(segmentedData.option)
                 }
             }
         }
-    }
-    else {
+    } else {
         SingleChoiceSegmentedButtonRow {
             uiState.options.fastForEachIndexed { index, segmentedData ->
                 val selected = uiState.selectedIndex == index
                 SegmentedButton(
                     shape = SegmentedButtonDefaults.itemShape(index, uiState.options.size),
                     icon = {
-                        SegmentedButtonDefaults.Icon(selected){
+                        SegmentedButtonDefaults.Icon(selected) {
                             Icon(
                                 painter = painterResource(segmentedData.icon),
                                 contentDescription = null,
-                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize),
                             )
                         }
                     },
                     selected = selected,
-                    onClick = { onChecked(index) }
+                    onClick = { onChecked(index) },
                 ) {
                     Text(segmentedData.option)
                 }
@@ -75,13 +74,15 @@ fun SegmentedButtonComp(
 private fun SegmentedButtonPreview() {
     ComposeSandboxTheme {
         SegmentedButtonComp(
-            uiState = SegmentedState(
-                options = listOf(
-                    SegmentedData("Add", R.drawable.baseline_add_24),
-                    SegmentedData("Search", R.drawable.baseline_search_24, true),
-                    SegmentedData("Lock", R.drawable.baseline_lock_outline_24),
-                )
-            )
+            uiState =
+                SegmentedState(
+                    options =
+                        listOf(
+                            SegmentedData("Add", R.drawable.baseline_add_24),
+                            SegmentedData("Search", R.drawable.baseline_search_24, true),
+                            SegmentedData("Lock", R.drawable.baseline_lock_outline_24),
+                        ),
+                ),
         ) { }
     }
 }

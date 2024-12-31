@@ -42,7 +42,7 @@ import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
 fun MainScreen(
     modifier: Modifier = Modifier,
     viewModel: MainViewModel,
-    onNavigate: (Destination)->Unit
+    onNavigate: (Destination) -> Unit,
 ) {
     val topAppBarState = rememberTopAppBarState()
     val scrollBehavior = exitUntilCollapsedScrollBehavior(topAppBarState)
@@ -52,28 +52,34 @@ fun MainScreen(
     var showSort by remember { mutableStateOf(false) }
 
     LaunchedEffect(uiState.searchState.value, uiState.sortType) {
-        filteredItems = uiState.menuItems.filter {
-            context.resources.getString(it.title)
-                .lowercase()
-                .contains(uiState.searchState.value)
-        }.sortedBy {
-            if (uiState.sortType == SortType.ALPHABET)
-            context.resources.getString(it.title)
-            else ""
-        }
+        filteredItems =
+            uiState.menuItems
+                .filter {
+                    context.resources
+                        .getString(it.title)
+                        .lowercase()
+                        .contains(uiState.searchState.value)
+                }.sortedBy {
+                    if (uiState.sortType == SortType.ALPHABET) {
+                        context.resources.getString(it.title)
+                    } else {
+                        ""
+                    }
+                }
     }
 
     Scaffold(
-        modifier = modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .fillMaxSize(),
+        modifier =
+            modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .fillMaxSize(),
         topBar = {
             LargeTopAppBar(
                 title = {
                     GreetingComp(
                         name = uiState.userName,
-                        collapsedFraction = topAppBarState.collapsedFraction
-                    ){
+                        collapsedFraction = topAppBarState.collapsedFraction,
+                    ) {
                         viewModel.setDialogVisibility(true)
                     }
                 },
@@ -81,55 +87,61 @@ fun MainScreen(
                     SearchComp(
                         modifier = Modifier.padding(horizontal = 16.dp),
                         state = uiState.searchState,
-                        delegate = object : SearchDelegate{
-                            override fun onChange(value: String) {
-                                viewModel.setSearchValue(value)
-                            }
-
-                            override fun onClose() {
-                                if (filteredItems.isEmpty()){
-                                    viewModel.setSearchValue("")
+                        delegate =
+                            object : SearchDelegate {
+                                override fun onChange(value: String) {
+                                    viewModel.setSearchValue(value)
                                 }
-                            }
-                        }
+
+                                override fun onClose() {
+                                    if (filteredItems.isEmpty()) {
+                                        viewModel.setSearchValue("")
+                                    }
+                                }
+                            },
                     )
                 },
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
             )
-        }
+        },
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(horizontal = 16.dp),
         ) {
             item {
                 Row(
-                    modifier = Modifier.clickable {
-                        showSort = true
-                    }
+                    modifier =
+                        Modifier.clickable {
+                            showSort = true
+                        },
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.baseline_sort_24),
-                        contentDescription = null
+                        contentDescription = null,
                     )
                     Text(
-                        text = uiState.sortType.toString()
+                        text = uiState.sortType.toString(),
                     )
                 }
             }
 
-            itemsIndexed(filteredItems){index, item->
-                val itemModifier = if(index == 0)
-                    Modifier.padding(top = 8.dp)
-                else Modifier
+            itemsIndexed(filteredItems) { index, item ->
+                val itemModifier =
+                    if (index == 0) {
+                        Modifier.padding(top = 8.dp)
+                    } else {
+                        Modifier
+                    }
                 MainItemComp(
                     modifier = itemModifier.padding(bottom = 8.dp),
-                    number = index+1,
+                    number = index + 1,
                     state = item,
-                    highlight = uiState.searchState.value
-                ){
+                    highlight = uiState.searchState.value,
+                ) {
                     onNavigate(item.route)
                 }
             }
@@ -141,12 +153,12 @@ fun MainScreen(
             showSort = showSort,
             sortType = uiState.sortType,
             onChanged = { viewModel.changeSortType(it) },
-            onDismiss = {showSort = false}
+            onDismiss = { showSort = false },
         )
         ChangeNameDialogComp(
             isVisible = uiState.isChangeNameDialogVisible,
             onSave = { viewModel.saveUsername(it) },
-            onDismiss = { viewModel.setDialogVisibility(false) }
+            onDismiss = { viewModel.setDialogVisibility(false) },
         )
     }
 }
@@ -156,7 +168,7 @@ fun MainScreen(
 private fun MainScreenPreview() {
     ComposeSandboxTheme {
         MainScreen(
-            viewModel = MainViewModel(null)
-        ){}
+            viewModel = MainViewModel(null),
+        ) {}
     }
 }

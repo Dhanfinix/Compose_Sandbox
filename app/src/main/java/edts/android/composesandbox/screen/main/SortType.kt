@@ -1,10 +1,10 @@
 package edts.android.composesandbox.screen.main
 
 enum class SortType {
-    CREATED{
+    CREATED {
         override fun toString() = "Created"
     },
-    ALPHABET{
+    ALPHABET {
         override fun toString() = "Alphabet"
-    }
+    },
 }

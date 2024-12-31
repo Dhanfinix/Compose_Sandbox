@@ -49,26 +49,24 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DialogScreen(
-    modifier: Modifier = Modifier
-) {
+fun DialogScreen(modifier: Modifier = Modifier) {
     val btnModifier = Modifier.fillMaxWidth()
     val context = LocalContext.current
     ShowcaseBaseScreen(
         modifier = modifier,
-        title = R.string.dialog
+        title = R.string.dialog,
     ) {
         item {
             var showDialog by remember { mutableStateOf(false) }
             Button(
                 modifier = btnModifier,
-                onClick = { showDialog = true }
+                onClick = { showDialog = true },
             ) {
                 Text("Common Dialog")
             }
             AnimatedVisibility(showDialog) {
                 Dialog(
-                    onDismissRequest = { showDialog = false }
+                    onDismissRequest = { showDialog = false },
                 ) {
                     Card {
                         Column(Modifier.padding(24.dp)) {
@@ -82,27 +80,28 @@ fun DialogScreen(
             var showDialog by remember { mutableStateOf(false) }
             Button(
                 modifier = btnModifier,
-                onClick = { showDialog = true }
+                onClick = { showDialog = true },
             ) {
                 Text("Undismissable Dialog")
             }
             AnimatedVisibility(showDialog) {
                 Dialog(
                     onDismissRequest = { showDialog = false },
-                    properties = DialogProperties(
-                        dismissOnBackPress = false,
-                        dismissOnClickOutside = false
-                    )
+                    properties =
+                        DialogProperties(
+                            dismissOnBackPress = false,
+                            dismissOnClickOutside = false,
+                        ),
                 ) {
                     Card {
                         Column(
                             modifier = Modifier.padding(24.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             Text("Click Button Below to Close")
                             Button(
                                 modifier = btnModifier,
-                                onClick = { showDialog = false }
+                                onClick = { showDialog = false },
                             ) {
                                 Text("Close")
                             }
@@ -115,27 +114,30 @@ fun DialogScreen(
             var showDialog by remember { mutableStateOf(false) }
             Button(
                 modifier = btnModifier,
-                onClick = { showDialog = true }
+                onClick = { showDialog = true },
             ) {
                 Text("Alert Dialog")
             }
             AnimatedVisibility(showDialog) {
                 AlertDialog(
                     onDismissRequest = { showDialog = false },
-                    confirmButton = { TextButton({showDialog = false}) { Text("Accept") } },
-                    dismissButton = { TextButton({showDialog = false}) { Text("Dismiss") } },
-                    icon = { Icon(
-                        painter = painterResource(R.drawable.baseline_lock_outline_24),
-                        contentDescription = null)
+                    confirmButton = { TextButton({ showDialog = false }) { Text("Accept") } },
+                    dismissButton = { TextButton({ showDialog = false }) { Text("Dismiss") } },
+                    icon = {
+                        Icon(
+                            painter = painterResource(R.drawable.baseline_lock_outline_24),
+                            contentDescription = null,
+                        )
                     },
                     title = {
                         Image(
                             painter = painterResource(R.drawable.montains),
-                            contentDescription = null)
+                            contentDescription = null,
+                        )
                     },
                     text = {
                         Text("Alert dialog is dialog with predefined component position")
-                    }
+                    },
                 )
             }
         }
@@ -144,7 +146,7 @@ fun DialogScreen(
             val pickerState = rememberDatePickerState()
             Button(
                 modifier = btnModifier,
-                onClick = { showDialog = true }
+                onClick = { showDialog = true },
             ) {
                 Text("Date Picker Dialog")
             }
@@ -155,10 +157,11 @@ fun DialogScreen(
                         TextButton({
                             showDialog = false
                             Toast.makeText(context, formatDate(pickerState.selectedDateMillis), Toast.LENGTH_SHORT).show()
-                        }) { Text("Accept") } }
+                        }) { Text("Accept") }
+                    },
                 ) {
                     DatePicker(
-                        state = pickerState
+                        state = pickerState,
                     )
                 }
             }
@@ -172,38 +175,39 @@ fun DialogScreen(
                 onClick = {
                     showDialog = true
                     countDown = duration
-                }
+                },
             ) {
                 Text("Loading Dialog")
             }
             AnimatedVisibility(showDialog) {
                 LaunchedEffect(showDialog) {
-                    for (i in duration downTo 1){
+                    for (i in duration downTo 1) {
                         delay(1000L)
-                        countDown = i-1
+                        countDown = i - 1
                     }
                     showDialog = false
                 }
 
                 Dialog(
-                    onDismissRequest = { showDialog = false }
+                    onDismissRequest = { showDialog = false },
                 ) {
                     Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Box(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
-                        ){
+                            modifier =
+                                Modifier
+                                    .size(100.dp)
+                                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp)),
+                        ) {
                             CircularProgressIndicator(
-                                modifier = Modifier.align(Alignment.Center)
+                                modifier = Modifier.align(Alignment.Center),
                             )
                         }
                         Text(
                             "Dismissing in $countDown seconds",
                             Modifier.padding(top = 16.dp),
-                            color = Color.White
+                            color = Color.White,
                         )
                     }
                 }

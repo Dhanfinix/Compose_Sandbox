@@ -4,5 +4,5 @@ import edts.android.composesandbox.navigation.Destination
 
 data class MainItemState(
     val title: Int,
-    val route: Destination
+    val route: Destination,
 )

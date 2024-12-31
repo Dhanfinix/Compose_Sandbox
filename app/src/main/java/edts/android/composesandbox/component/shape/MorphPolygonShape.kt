@@ -16,16 +16,17 @@ import androidx.graphics.shapes.toPath
 
 class MorphPolygonShape(
     private val morph: Morph,
-    private val percentage: Float
-): Shape{
+    private val percentage: Float,
+) : Shape {
     private val matrix = Matrix()
+
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
-        density: Density
+        density: Density,
     ): Outline {
         // to maintains the aspect ration between shape morph
-        matrix.scale(size.width/2f, size.height/2f)
+        matrix.scale(size.width / 2f, size.height / 2f)
         // to ensures the shape is properly centered
         matrix.translate(1f, 1f)
 

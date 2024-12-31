@@ -11,17 +11,18 @@ import androidx.compose.ui.draw.clip
 @Composable
 fun CardCornerCutComp(
     modifier: Modifier = Modifier,
-    onClick: ()->Unit = {},
-    content: @Composable ()->Unit
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit,
 ) {
     val shape = CutCornerShape(topStartPercent = 50, bottomEndPercent = 50)
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(shape)
-            .clickable { onClick() },
-        shape = shape
-    ){
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clip(shape)
+                .clickable { onClick() },
+        shape = shape,
+    ) {
         content()
     }
 }

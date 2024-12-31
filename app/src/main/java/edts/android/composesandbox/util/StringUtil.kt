@@ -12,7 +12,7 @@ object StringUtil {
      */
     fun String.highlightQuery(
         query: String,
-        color: Color = Color.Yellow
+        color: Color = Color.Yellow,
     ): AnnotatedString {
         // If the original string or the query is empty, return the original string as an AnnotatedString
         if (this.isEmpty() || query.isEmpty()) return AnnotatedString(this)
@@ -23,7 +23,7 @@ object StringUtil {
 
         return buildAnnotatedString {
             var startIndex = 0 // Start position for searching the query within the string
-            var index: Int     // Variable to store the index of the found query
+            var index: Int // Variable to store the index of the found query
 
             // Loop through the original string to find all occurrences of the query
             while (startIndex < this@highlightQuery.length) {
@@ -51,5 +51,4 @@ object StringUtil {
             }
         }
     }
-
 }

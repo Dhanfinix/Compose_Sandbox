@@ -28,14 +28,14 @@ import edts.android.composesandbox.util.LightDarkPreview
 @Composable
 fun TextFieldScreen(
     modifier: Modifier = Modifier,
-    viewModel: TextFieldViewModel
+    viewModel: TextFieldViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     ShowcaseBaseScreen(
         modifier = modifier,
         title = R.string.text_field,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         item {
             // normal text field
@@ -47,7 +47,7 @@ fun TextFieldScreen(
                 value = uiState.normalTextField,
                 onValueChange = {
                     viewModel.setNormal(it)
-                }
+                },
             )
         }
         item {
@@ -60,7 +60,7 @@ fun TextFieldScreen(
                 value = uiState.outlinedTextField,
                 onValueChange = {
                     viewModel.setOutlined(it)
-                }
+                },
             )
         }
         item {
@@ -73,16 +73,16 @@ fun TextFieldScreen(
                 onValueChange = {
                     viewModel.setBasic(it)
                 },
-                decorationBox = {innerTextField ->
+                decorationBox = { innerTextField ->
                     Box(
-                        Modifier.padding(8.dp)
+                        Modifier.padding(8.dp),
                     ) {
-                        if (uiState.basicTextField.isEmpty()){
+                        if (uiState.basicTextField.isEmpty()) {
                             Text("This is basic text field")
                         }
                         innerTextField()
                     }
-                }
+                },
             )
         }
         item {
@@ -90,7 +90,7 @@ fun TextFieldScreen(
             PasswordTextFieldComp(
                 label = "This is password text field",
                 value = uiState.passwordTextField,
-                mask = '\u2726'
+                mask = '\u2726',
             ) { viewModel.setPassword(it) }
         }
         item {
@@ -98,20 +98,22 @@ fun TextFieldScreen(
             SearchComp(
                 state = uiState.searchState,
                 hint = "Custom text field from basic",
-                delegate = object: SearchDelegate{
-                    override fun onChange(value: String) {
-                        viewModel.setSearchQuery(value)
-                    }
-                    override fun onClose() {}
-                }
+                delegate =
+                    object : SearchDelegate {
+                        override fun onChange(value: String) {
+                            viewModel.setSearchQuery(value)
+                        }
+
+                        override fun onClose() {}
+                    },
             )
         }
         item {
             // Pin text field
             OtpComp(
                 uiState = uiState.pinTextField,
-                showKeyboardInit = false
-            ) {newValue, _->
+                showKeyboardInit = false,
+            ) { newValue, _ ->
                 viewModel.setOtpValue(newValue)
             }
         }
@@ -120,7 +122,7 @@ fun TextFieldScreen(
             CounterTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = "Text field with char counter",
-                uiState = uiState.counterTextField
+                uiState = uiState.counterTextField,
             ) {
                 viewModel.setCounter(it)
             }
@@ -131,7 +133,7 @@ fun TextFieldScreen(
                 modifier = Modifier.fillMaxWidth(),
                 value = "This text field is disabled",
                 onValueChange = {},
-                enabled = false
+                enabled = false,
             )
         }
     }
@@ -142,7 +144,7 @@ fun TextFieldScreen(
 private fun TextFieldPreview() {
     ComposeSandboxTheme {
         TextFieldScreen(
-            viewModel = TextFieldViewModel()
+            viewModel = TextFieldViewModel(),
         )
     }
 }

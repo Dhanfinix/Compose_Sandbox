@@ -22,32 +22,39 @@ fun PasswordTextFieldComp(
     value: String,
     label: String = "This is password text field",
     mask: Char = '\u2022',
-    onValueChange: (String)->Unit
+    onValueChange: (String) -> Unit,
 ) {
     var showPass by remember { mutableStateOf(false) }
     val trailingIcon =
-        if (showPass) R.drawable.baseline_lock_open_24
-        else R.drawable.baseline_lock_outline_24
+        if (showPass) {
+            R.drawable.baseline_lock_open_24
+        } else {
+            R.drawable.baseline_lock_outline_24
+        }
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
         label = { Text(label) },
         visualTransformation =
-            if (showPass) VisualTransformation.None
-            else PasswordVisualTransformation(
-                mask = mask
-            ),
+            if (showPass) {
+                VisualTransformation.None
+            } else {
+                PasswordVisualTransformation(
+                    mask = mask,
+                )
+            },
         value = value,
         trailingIcon = {
             Icon(
                 painter = painterResource(trailingIcon),
                 contentDescription = null,
-                modifier = Modifier.clickable {
-                    showPass = !showPass
-                }
+                modifier =
+                    Modifier.clickable {
+                        showPass = !showPass
+                    },
             )
         },
         onValueChange = {
             onValueChange(it)
-        }
+        },
     )
 }

@@ -27,4 +27,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "Compose Sandbox"
 include(":app")
- 

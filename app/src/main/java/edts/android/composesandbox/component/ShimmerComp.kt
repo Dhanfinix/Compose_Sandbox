@@ -11,11 +11,11 @@ import edts.android.composesandbox.util.shimmer
 @Composable
 fun ShimmerComp(
     modifier: Modifier = Modifier,
-    height: Dp = 15.dp
+    height: Dp = 15.dp,
 ) {
     Box(
         modifier
             .height(height)
-            .shimmer()
+            .shimmer(),
     )
 }

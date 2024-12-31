@@ -34,10 +34,8 @@ import androidx.compose.ui.unit.dp
 import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
 import edts.android.composesandbox.ui.theme.InterFamily
 import edts.android.composesandbox.ui.theme.MontserratFamily
-import edts.android.composesandbox.ui.theme.body1
 import edts.android.composesandbox.ui.theme.caption
 import edts.android.composesandbox.ui.theme.headline1
-import edts.android.composesandbox.ui.theme.subtitle1
 import edts.base.android.core_resource.component.otp.OtpState
 
 /**
@@ -51,12 +49,12 @@ fun OtpComp(
     otpCount: Int = 4,
     cursorIndicator: Boolean = true,
     showKeyboardInit: Boolean = true,
-    onOtpTextChange: (String, Boolean) -> Unit
+    onOtpTextChange: (String, Boolean) -> Unit,
 ) {
     val focusRequester = remember { FocusRequester() }
 
     LaunchedEffect(Unit) {
-        if (showKeyboardInit){
+        if (showKeyboardInit) {
             focusRequester.requestFocus()
         }
         if (uiState.otpText.length > otpCount) {
@@ -74,7 +72,7 @@ fun OtpComp(
     }
 
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         BasicTextField(
             modifier = modifier.focusRequester(focusRequester),
@@ -92,27 +90,25 @@ fun OtpComp(
                             index = index,
                             text = otpText,
                             type = uiState.otpType,
-                            cursorIndicator = cursorIndicator
+                            cursorIndicator = cursorIndicator,
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                     }
                 }
-            }
+            },
         )
 
-       if (uiState.otpType == OtpType.ERROR){
-           uiState.alertMsg?.let {
-              Text(
-                  modifier = Modifier.padding(top = 12.dp),
-                  text = it,
-                  style = MontserratFamily.caption(),
-                  color = uiState.otpType.contentColor
-              )
-           }
-       }
+        if (uiState.otpType == OtpType.ERROR) {
+            uiState.alertMsg?.let {
+                Text(
+                    modifier = Modifier.padding(top = 12.dp),
+                    text = it,
+                    style = MontserratFamily.caption(),
+                    color = uiState.otpType.contentColor,
+                )
+            }
+        }
     }
-
-
 }
 
 @Composable
@@ -120,57 +116,58 @@ private fun CharView(
     index: Int,
     text: String,
     type: OtpType,
-    cursorIndicator: Boolean
+    cursorIndicator: Boolean,
 ) {
-    val char = when {
-        index == text.length -> ""
-        index > text.length -> ""
-        else -> text[index].toString()
-    }
+    val char =
+        when {
+            index == text.length -> ""
+            index > text.length -> ""
+            else -> text[index].toString()
+        }
     val isActive = (index == text.length) && cursorIndicator
     Text(
-        modifier = Modifier
-            .width(40.dp)
-            .background(
-                color = type.containerColor,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .border(
-                width = if (isActive) 3.dp else 1.dp,
-                color = if(isActive) type.activeBorderColor else type.borderColor,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .padding(10.dp),
+        modifier =
+            Modifier
+                .width(40.dp)
+                .background(
+                    color = type.containerColor,
+                    shape = RoundedCornerShape(8.dp),
+                ).border(
+                    width = if (isActive) 3.dp else 1.dp,
+                    color = if (isActive) type.activeBorderColor else type.borderColor,
+                    shape = RoundedCornerShape(8.dp),
+                ).padding(10.dp),
         text = char,
         style = InterFamily.headline1(),
         color = type.contentColor,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun PreviewOtpComp(
-    @PreviewParameter(PreviewProviderOtp::class) state: OtpState
+    @PreviewParameter(PreviewProviderOtp::class) state: OtpState,
 ) {
     ComposeSandboxTheme {
         Surface(
-            Modifier.padding(16.dp)
+            Modifier.padding(16.dp),
         ) {
-            OtpComp(uiState = state) {_, _-> }
+            OtpComp(uiState = state) { _, _ -> }
         }
     }
 }
 
 private class PreviewProviderOtp : PreviewParameterProvider<OtpState> {
-    override val values = sequenceOf(
-        OtpState(),
-        OtpState("12"),
-        OtpState("1234"),
-        OtpState(
-            "3214",
-            OtpType.ERROR,
-            "Kode yang Anda masukan salah, mohon cek kembali."
+    override val values =
+        sequenceOf(
+            OtpState(),
+            OtpState("12"),
+            OtpState("1234"),
+            OtpState(
+                "3214",
+                OtpType.ERROR,
+                "Kode yang Anda masukan salah, mohon cek kembali.",
+            ),
         )
-    )
 }

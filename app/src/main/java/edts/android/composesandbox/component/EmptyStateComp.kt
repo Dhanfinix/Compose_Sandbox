@@ -22,16 +22,16 @@ fun EmptyStateComp(
     AnimatedVisibility(isVisible) {
         Column(
             modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             DotLottieAnimation(
                 source = DotLottieSource.Asset("empty.lottie"),
                 autoplay = true,
-                loop = true
+                loop = true,
             )
             Text(
                 text = stringResource(R.string.not_found),
-                style = MontserratFamily.subtitle1()
+                style = MontserratFamily.subtitle1(),
             )
         }
     }

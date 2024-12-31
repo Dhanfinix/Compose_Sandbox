@@ -12,12 +12,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import edts.android.composesandbox.R
-import edts.android.composesandbox.util.StringUtil.highlightQuery
 import edts.android.composesandbox.component.CardCornerCutComp
 import edts.android.composesandbox.navigation.Destination
 import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
 import edts.android.composesandbox.ui.theme.InterFamily
 import edts.android.composesandbox.ui.theme.button
+import edts.android.composesandbox.util.StringUtil.highlightQuery
 
 @Composable
 fun MainItemComp(
@@ -25,25 +25,25 @@ fun MainItemComp(
     number: Int,
     state: MainItemState,
     highlight: String = "",
-    onClick: ()->Unit
+    onClick: () -> Unit,
 ) {
     val normal = "$number. " + stringResource(state.title)
     val highlighted = normal.highlightQuery(highlight)
 
     CardCornerCutComp(
         modifier = modifier,
-        onClick = { onClick() }
+        onClick = { onClick() },
     ) {
         Row(
             Modifier.padding(
                 horizontal = 16.dp,
-                vertical = 10.dp
+                vertical = 10.dp,
             ),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
                 text = highlighted,
-                style = InterFamily.button()
+                style = InterFamily.button(),
             )
         }
     }
@@ -53,22 +53,23 @@ fun MainItemComp(
 @Composable
 private fun MainItemPreview(
     @PreviewParameter(MainItemPreviewProvider::class)
-    highlight: String
+    highlight: String,
 ) {
     ComposeSandboxTheme {
         MainItemComp(
             modifier = Modifier.padding(8.dp),
             number = 7,
             state = MainItemState(R.string.swipe_to_refresh, Destination.Home()),
-            highlight = highlight
-        ){}
+            highlight = highlight,
+        ) {}
     }
 }
 
-private class MainItemPreviewProvider: PreviewParameterProvider<String?>{
-    override val values = sequenceOf(
-        "",
-        "Swipe",
-        "Refresh"
-    )
+private class MainItemPreviewProvider : PreviewParameterProvider<String?> {
+    override val values =
+        sequenceOf(
+            "",
+            "Swipe",
+            "Refresh",
+        )
 }

@@ -8,16 +8,18 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class SwipeToRefreshViewModel @Inject constructor() : ViewModel() {
-    private val _uiState = MutableStateFlow(SwipeToRefreshState())
-    val uiState: StateFlow<SwipeToRefreshState>
-        get() = _uiState
+class SwipeToRefreshViewModel
+    @Inject
+    constructor() : ViewModel() {
+        private val _uiState = MutableStateFlow(SwipeToRefreshState())
+        val uiState: StateFlow<SwipeToRefreshState>
+            get() = _uiState
 
-    fun setRefreshState(isRefreshing: Boolean){
-        _uiState.update {
-            it.copy(
-                isRefreshing = isRefreshing
-            )
+        fun setRefreshState(isRefreshing: Boolean) {
+            _uiState.update {
+                it.copy(
+                    isRefreshing = isRefreshing,
+                )
+            }
         }
     }
-}

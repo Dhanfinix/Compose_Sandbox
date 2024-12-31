@@ -43,7 +43,7 @@ import edts.android.composesandbox.util.conditional
 fun GestureAsyncImage(
     modifier: Modifier = Modifier,
     model: Any?,
-    contentScale: ContentScale = ContentScale.Fit
+    contentScale: ContentScale = ContentScale.Fit,
 ) {
     val myUri by remember(model) { mutableStateOf(model) }
     var scale by remember { mutableFloatStateOf(1f) }
@@ -57,85 +57,87 @@ fun GestureAsyncImage(
         panSpeed = if (scale < 2) 1.5f else 4.5f
     }
 
-    Box(modifier
-        .background(
-            MaterialTheme.colorScheme.surfaceContainer,
-            shape = RoundedCornerShape(20.dp)
-        )
-        .clip(RoundedCornerShape(20.dp))
-    ){
+    Box(
+        modifier
+            .background(
+                MaterialTheme.colorScheme.surfaceContainer,
+                shape = RoundedCornerShape(20.dp),
+            ).clip(RoundedCornerShape(20.dp)),
+    ) {
         AsyncImage(
             model = myUri,
             contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
-                ) { }
-                .graphicsLayer(
-                    scaleX = scale,
-                    scaleY = scale,
-                    translationX = offsetX,
-                    translationY = offsetY
-                )
-                .pointerInput(Unit) {
-                    detectTransformGestures { _, pan, zoom, _ ->
-                        scale = (scale * zoom).coerceIn(minScale, maxScale)
-                        offsetX += pan.x * panSpeed
-                        offsetY += pan.y * panSpeed
-                    }
-                }
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onDoubleTap = { offset ->
-                            if (scale > minScale) {
-                                // Reset to original size
-                                scale = minScale
-                                offsetX = 0f
-                                offsetY = 0f
-                            } else {
-                                // Calculate the touch point relative to the center
-                                val centerX = size.width / 2f
-                                val centerY = size.height / 2f
-
-                                // Calculate the touch offset from center
-                                val touchOffsetX = offset.x - centerX
-                                val touchOffsetY = offset.y - centerY
-
-                                // Calculate new offset to zoom into touch point
-                                offsetX = -touchOffsetX * (maxScale - 1)
-                                offsetY = -touchOffsetY * (maxScale - 1)
-
-                                // Ensure offset stays within bounds
-                                val maxX = (size.width * (maxScale - 1)) / 2
-                                val maxY = (size.height * (maxScale - 1)) / 2
-
-                                offsetX = offsetX.coerceIn(-maxX, maxX)
-                                offsetY = offsetY.coerceIn(-maxY, maxY)
-
-                                scale = maxScale
-                            }
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() },
+                    ) { }
+                    .graphicsLayer(
+                        scaleX = scale,
+                        scaleY = scale,
+                        translationX = offsetX,
+                        translationY = offsetY,
+                    ).pointerInput(Unit) {
+                        detectTransformGestures { _, pan, zoom, _ ->
+                            scale = (scale * zoom).coerceIn(minScale, maxScale)
+                            offsetX += pan.x * panSpeed
+                            offsetY += pan.y * panSpeed
                         }
-                    )
-                },
-            contentScale = contentScale
+                    }.pointerInput(Unit) {
+                        detectTapGestures(
+                            onDoubleTap = { offset ->
+                                if (scale > minScale) {
+                                    // Reset to original size
+                                    scale = minScale
+                                    offsetX = 0f
+                                    offsetY = 0f
+                                } else {
+                                    // Calculate the touch point relative to the center
+                                    val centerX = size.width / 2f
+                                    val centerY = size.height / 2f
+
+                                    // Calculate the touch offset from center
+                                    val touchOffsetX = offset.x - centerX
+                                    val touchOffsetY = offset.y - centerY
+
+                                    // Calculate new offset to zoom into touch point
+                                    offsetX = -touchOffsetX * (maxScale - 1)
+                                    offsetY = -touchOffsetY * (maxScale - 1)
+
+                                    // Ensure offset stays within bounds
+                                    val maxX = (size.width * (maxScale - 1)) / 2
+                                    val maxY = (size.height * (maxScale - 1)) / 2
+
+                                    offsetX = offsetX.coerceIn(-maxX, maxX)
+                                    offsetY = offsetY.coerceIn(-maxY, maxY)
+
+                                    scale = maxScale
+                                }
+                            },
+                        )
+                    },
+            contentScale = contentScale,
         )
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter),
-            horizontalArrangement = Arrangement.SpaceBetween
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             val color = MaterialTheme.colorScheme.primary
             val onColor = MaterialTheme.colorScheme.onPrimary
-            fun btnModifier(isLeft: Boolean) = Modifier
-                .conditional(isLeft,
-                    ifTrue = {background(color, RoundedCornerShape(topEnd = 30.dp))},
-                    ifFalse = {background(color, RoundedCornerShape(topStart = 30.dp))}
-                )
-                .padding(16.dp)
+
+            fun btnModifier(isLeft: Boolean) =
+                Modifier
+                    .conditional(
+                        isLeft,
+                        ifTrue = { background(color, RoundedCornerShape(topEnd = 30.dp)) },
+                        ifFalse = { background(color, RoundedCornerShape(topStart = 30.dp)) },
+                    ).padding(16.dp)
 //            Image(
 //                painter = painterResource(id = R.drawable.baseline_find_replace_24),
 //                contentDescription = null,
@@ -145,18 +147,19 @@ fun GestureAsyncImage(
             Spacer(Modifier)
             AnimatedVisibility(
                 visible = scale != 1f || offsetY != 0f || offsetX != 0f,
-                modifier = Modifier
+                modifier = Modifier,
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.baseline_crop_free_24),
                     contentDescription = null,
                     colorFilter = ColorFilter.tint(onColor),
-                    modifier = btnModifier(false)
-                        .clickable {
-                            scale = 1f
-                            offsetX = 0f
-                            offsetY = 0f
-                        }
+                    modifier =
+                        btnModifier(false)
+                            .clickable {
+                                scale = 1f
+                                offsetX = 0f
+                                offsetY = 0f
+                            },
                 )
             }
         }

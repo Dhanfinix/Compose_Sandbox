@@ -17,30 +17,31 @@ import edts.android.composesandbox.R
 import edts.android.composesandbox.screen.showcase.base.ShowcaseBaseScreen
 
 @Composable
-fun RegularColumnScreen(
-    modifier: Modifier = Modifier
-) {
-    val dummyData = listOf(
-        ColumnData(ColumnType.TEXT, "ColumnType.Text will create a text component"),
-        ColumnData(ColumnType.IMAGE, "https://picsum.photos/id/237/720/480"),
-        ColumnData(ColumnType.TEXT, "ColumnType.IMAGE will create an image component like above and below"),
-        ColumnData(ColumnType.IMAGE, "https://picsum.photos/id/100/720/480"),
-        ColumnData(ColumnType.BUTTON, "While, ColumnType.BUTTON will create a button component")
-    )
+fun RegularColumnScreen(modifier: Modifier = Modifier) {
+    val dummyData =
+        listOf(
+            ColumnData(ColumnType.TEXT, "ColumnType.Text will create a text component"),
+            ColumnData(ColumnType.IMAGE, "https://picsum.photos/id/237/720/480"),
+            ColumnData(ColumnType.TEXT, "ColumnType.IMAGE will create an image component like above and below"),
+            ColumnData(ColumnType.IMAGE, "https://picsum.photos/id/100/720/480"),
+            ColumnData(ColumnType.BUTTON, "While, ColumnType.BUTTON will create a button component"),
+        )
     val context = LocalContext.current
     ShowcaseBaseScreen(
         title = R.string.regular_column,
-        modifier = modifier
-    ){
+        modifier = modifier,
+    ) {
         item {
-            Text("This app and it's components already use a lot of column and lazy column, " +
-                    "this page will only focus on LazyColumn as replacement of RecyclerView")
+            Text(
+                "This app and it's components already use a lot of column and lazy column, " +
+                    "this page will only focus on LazyColumn as replacement of RecyclerView",
+            )
         }
         item {
             Text("Text below only created with 3 lines.")
         }
-        for (i in 1..10){
-            item{ Text("Item $i of 10") }
+        for (i in 1..10) {
+            item { Text("Item $i of 10") }
         }
         item {
             HorizontalDivider()
@@ -48,24 +49,26 @@ fun RegularColumnScreen(
         item {
             Text("To make item based on it's type, just use when method")
         }
-        items(dummyData){data->
-            when(data.type){
+        items(dummyData) { data ->
+            when (data.type) {
                 ColumnType.TEXT -> {
                     Text(data.value)
                 }
                 ColumnType.IMAGE -> {
                     AsyncImage(
-                        model = ImageRequest.Builder(context)
-                            .data(data.value)
-                            .crossfade(true)
-                            .build(),
+                        model =
+                            ImageRequest
+                                .Builder(context)
+                                .data(data.value)
+                                .crossfade(true)
+                                .build(),
                         placeholder = painterResource(R.drawable.image_placeholder),
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
                 else -> {
                     Button(
-                        onClick = { Toast.makeText(context, data.value, Toast.LENGTH_SHORT).show()}
+                        onClick = { Toast.makeText(context, data.value, Toast.LENGTH_SHORT).show() },
                     ) {
                         Text("Click to see it's value")
                     }
@@ -78,7 +81,7 @@ fun RegularColumnScreen(
         item {
             Text(
                 "Above list doesn't need any holder or adapter like in RecyclerView",
-                Modifier.padding(bottom = 16.dp)
+                Modifier.padding(bottom = 16.dp),
             )
         }
     }

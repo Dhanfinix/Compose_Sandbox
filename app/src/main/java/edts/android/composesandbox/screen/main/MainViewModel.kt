@@ -18,58 +18,63 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class MainViewModel @Inject constructor(
-    private val dataStore: DataStorePreference?
-) : ViewModel() {
-    private val _uiState = MutableStateFlow(MainScreenState())
-    val uiState: StateFlow<MainScreenState>
-        get() = _uiState
+class MainViewModel
+    @Inject
+    constructor(
+        private val dataStore: DataStorePreference?,
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow(MainScreenState())
+        val uiState: StateFlow<MainScreenState>
+            get() = _uiState
 
-    fun setSearchValue(value: String){
-        _uiState.update {
-            it.copy(
-                searchState = it.searchState.copy(
-                    value = value
+        fun setSearchValue(value: String) {
+            _uiState.update {
+                it.copy(
+                    searchState =
+                        it.searchState.copy(
+                            value = value,
+                        ),
                 )
-            )
+            }
+        }
+
+        init {
+            getUsername()
+        }
+
+        fun setDialogVisibility(isVisible: Boolean) {
+            _uiState.update {
+                it.copy(
+                    isChangeNameDialogVisible = isVisible,
+                )
+            }
+        }
+
+        fun saveUsername(value: String) =
+            viewModelScope.launch {
+                dataStore?.saveUsername(value)
+            }
+
+        private fun setUsername(value: String) {
+            _uiState.update {
+                it.copy(
+                    userName = value,
+                )
+            }
+        }
+
+        private fun getUsername() =
+            viewModelScope.launch {
+                dataStore?.getUsername()?.collectLatest { name ->
+                    setUsername(name)
+                } ?: setUsername("Datastore Null")
+            }
+
+        fun changeSortType(sortType: SortType) {
+            _uiState.update {
+                it.copy(
+                    sortType = sortType,
+                )
+            }
         }
     }
-
-    init {
-        getUsername()
-    }
-
-    fun setDialogVisibility(isVisible: Boolean){
-        _uiState.update {
-            it.copy(
-                isChangeNameDialogVisible = isVisible
-            )
-        }
-    }
-
-    fun saveUsername(value: String) = viewModelScope.launch {
-        dataStore?.saveUsername(value)
-    }
-
-    private fun setUsername(value: String){
-        _uiState.update {
-            it.copy(
-                userName = value
-            )
-        }
-    }
-
-    private fun getUsername() = viewModelScope.launch {
-        dataStore?.getUsername()?.collectLatest {name->
-            setUsername(name)
-        } ?: setUsername("Datastore Null")
-    }
-
-    fun changeSortType(sortType: SortType){
-        _uiState.update {
-            it.copy(
-                sortType = sortType
-            )
-        }
-    }
-}

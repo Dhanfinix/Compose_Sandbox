@@ -24,33 +24,34 @@ fun SortBottomSheetComp(
     modifier: Modifier = Modifier,
     showSort: Boolean,
     sortType: SortType,
-    onChanged: (SortType)->Unit,
-    onDismiss: ()->Unit
+    onChanged: (SortType) -> Unit,
+    onDismiss: () -> Unit,
 ) {
     val sortList = listOf(SortType.CREATED, SortType.ALPHABET)
     AnimatedVisibility(showSort) {
         ModalBottomSheet(
             modifier = modifier,
-            onDismissRequest = onDismiss
+            onDismissRequest = onDismiss,
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
             ) {
                 Text(
                     text = "Sort By",
                     style = MontserratFamily.subtitle1(),
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
                 )
-                sortList.forEach {type->
+                sortList.forEach { type ->
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.fillMaxWidth().clickable { onChanged(type) }
+                        modifier = Modifier.fillMaxWidth().clickable { onChanged(type) },
                     ) {
                         RadioButton(
                             selected = (sortType == type),
-                            onClick = {}
+                            onClick = {},
                         )
                         Text(type.toString())
                     }

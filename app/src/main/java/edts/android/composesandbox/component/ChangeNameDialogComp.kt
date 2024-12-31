@@ -34,8 +34,8 @@ import edts.android.composesandbox.ui.theme.headline3
 fun ChangeNameDialogComp(
     modifier: Modifier = Modifier,
     isVisible: Boolean,
-    onSave: (String)->Unit,
-    onDismiss: ()->Unit
+    onSave: (String) -> Unit,
+    onDismiss: () -> Unit
 ) {
     var username by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
@@ -50,46 +50,49 @@ fun ChangeNameDialogComp(
             focusRequester.requestFocus()
         }
         Dialog(
-            onDismissRequest = onDismiss
+            onDismissRequest = onDismiss,
         ) {
-            Card{
+            Card {
                 Column(
-                    modifier = modifier.padding(16.dp)
+                    modifier = modifier.padding(16.dp),
                 ) {
                     Text(
                         text = "Change Username",
                         style = InterFamily.headline3(),
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSurface,
                     )
                     OutlinedTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .focusRequester(focusRequester)
-                            .padding(top = 16.dp, bottom = 32.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .focusRequester(focusRequester)
+                                .padding(top = 16.dp, bottom = 32.dp),
                         value = username,
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            imeAction = ImeAction.Done
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onDone = { doSave() }
-                        ),
+                        keyboardOptions =
+                            KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Done,
+                            ),
+                        keyboardActions =
+                            KeyboardActions(
+                                onDone = { doSave() },
+                            ),
                         singleLine = true,
                         placeholder = {
                             Text("Write your username here...")
                         },
-                        onValueChange = { username = it }
+                        onValueChange = { username = it },
                     )
 
                     Row(
-                        modifier = Modifier.align(Alignment.End)
+                        modifier = Modifier.align(Alignment.End),
                     ) {
                         TextButton(
-                            onClick = { onDismiss() }
+                            onClick = { onDismiss() },
                         ) {
                             Text("Dismiss")
                         }
                         TextButton(
-                            onClick = { doSave() }
+                            onClick = { doSave() },
                         ) {
                             Text("Confirm")
                         }
@@ -107,7 +110,7 @@ private fun DialogPreview() {
         ChangeNameDialogComp(
             isVisible = true,
             onSave = {},
-            onDismiss = {}
+            onDismiss = {},
         )
     }
 }

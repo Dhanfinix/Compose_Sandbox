@@ -45,16 +45,14 @@ import edts.android.composesandbox.ui.theme.body1
 import edts.android.composesandbox.util.LightDarkPreview
 
 @Composable
-fun TextScreen(
-    modifier: Modifier = Modifier
-) {
+fun TextScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     var expandEllipsis by remember { mutableStateOf(false) }
 
     ShowcaseBaseScreen(
         modifier = modifier,
-        title = R.string.text
-    ){
+        title = R.string.text,
+    ) {
         item {
             // normal text
             Text("Normal Text")
@@ -63,30 +61,31 @@ fun TextScreen(
             // text with montserrat style
             Text(
                 text = "Text with montserrat family",
-                style = MontserratFamily.body1()
+                style = MontserratFamily.body1(),
             )
         }
         item {
             // text with inter style
             Text(
                 text = "Text with inter family",
-                style = InterFamily.body1()
+                style = InterFamily.body1(),
             )
         }
         item {
             // text color
             Text(
                 text = "[Copy Method] Text with montserrat family and green color",
-                style = MontserratFamily.body1().copy(
-                    color = Color.Green
-                )
+                style =
+                    MontserratFamily.body1().copy(
+                        color = Color.Green,
+                    ),
             )
         }
         item {
             Text(
                 text = "[Parameter] Text with montserrat family and red color",
                 style = MontserratFamily.body1(),
-                color = Color.Red
+                color = Color.Red,
             )
         }
         item {
@@ -94,7 +93,7 @@ fun TextScreen(
             Text(
                 text = "Text with inter family italic",
                 style = InterFamily.body1(),
-                fontStyle = FontStyle.Italic
+                fontStyle = FontStyle.Italic,
             )
         }
         item {
@@ -102,7 +101,7 @@ fun TextScreen(
             Text(
                 text = "Text with montserrat family bold",
                 style = MontserratFamily.body1(),
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             )
         }
         item {
@@ -110,13 +109,15 @@ fun TextScreen(
             val offset = Offset(5.0f, 10.0f)
             Text(
                 text = "Text with inter family and blue shadow",
-                style = InterFamily.body1().copy(
-                    shadow = Shadow(
-                        color = Color.Blue,
-                        offset = offset,
-                        blurRadius = 3f
-                    )
-                )
+                style =
+                    InterFamily.body1().copy(
+                        shadow =
+                            Shadow(
+                                color = Color.Blue,
+                                offset = offset,
+                                blurRadius = 3f,
+                            ),
+                    ),
             )
         }
         item {
@@ -124,18 +125,20 @@ fun TextScreen(
             val gradientColors = listOf(Cyan, Magenta, Purple40)
             Text(
                 text = "This is text with gradient color",
-                style = TextStyle(
-                    brush = Brush.linearGradient(
-                        colors = gradientColors
-                    )
-                )
+                style =
+                    TextStyle(
+                        brush =
+                            Brush.linearGradient(
+                                colors = gradientColors,
+                            ),
+                    ),
             )
         }
         item {
             // marquee
             Text(
                 text = "This marquee text, it's long, so it need to be scrolled by marquee modifier method",
-                modifier = Modifier.basicMarquee()
+                modifier = Modifier.basicMarquee(),
             )
         }
         item {
@@ -144,27 +147,29 @@ fun TextScreen(
                 text = "This is also long text, we use ellipsis to show that the text isn't done yet",
                 maxLines = if (expandEllipsis) Int.MAX_VALUE else 1,
                 overflow =
-                if (expandEllipsis)
-                    TextOverflow.Visible
-                else
-                    TextOverflow.Ellipsis,
-                modifier = Modifier.clickable {
-                    expandEllipsis = !expandEllipsis
-                }
+                    if (expandEllipsis) {
+                        TextOverflow.Visible
+                    } else {
+                        TextOverflow.Ellipsis
+                    },
+                modifier =
+                    Modifier.clickable {
+                        expandEllipsis = !expandEllipsis
+                    },
             )
         }
         item {
             // text with underline
             Text(
                 text = "Text with underline",
-                textDecoration = TextDecoration.Underline
+                textDecoration = TextDecoration.Underline,
             )
         }
         item {
             // text with LineThrough
             Text(
                 text = "Text with LineThrough",
-                textDecoration = TextDecoration.LineThrough
+                textDecoration = TextDecoration.LineThrough,
             )
         }
         item {
@@ -172,7 +177,7 @@ fun TextScreen(
             SpannableText(
                 text = "This is",
                 spanText = "spannable",
-                afterSpanText = "text"
+                afterSpanText = "text",
             ) {
                 Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
             }
@@ -180,51 +185,60 @@ fun TextScreen(
         item {
             // text with different fonts
             Text(
-                text = buildAnnotatedString {
-                    append("This text uses ")
-                    withStyle(style = SpanStyle(
-                        fontFamily = InterFamily,
-                        fontWeight = FontWeight.Bold
-                    )) {
-                        append("Inter font")
-                    }
-                    append(" and this text uses ")
-                    withStyle(style = SpanStyle(
-                        fontFamily = MontserratFamily,
-                        fontWeight = FontWeight.Bold
-                    )) {
-                        append("Montserrat font")
-                    }
-                    append(".")
-                },
-                style = TextStyle(fontSize = 16.sp)
+                text =
+                    buildAnnotatedString {
+                        append("This text uses ")
+                        withStyle(
+                            style =
+                                SpanStyle(
+                                    fontFamily = InterFamily,
+                                    fontWeight = FontWeight.Bold,
+                                ),
+                        ) {
+                            append("Inter font")
+                        }
+                        append(" and this text uses ")
+                        withStyle(
+                            style =
+                                SpanStyle(
+                                    fontFamily = MontserratFamily,
+                                    fontWeight = FontWeight.Bold,
+                                ),
+                        ) {
+                            append("Montserrat font")
+                        }
+                        append(".")
+                    },
+                style = TextStyle(fontSize = 16.sp),
             )
         }
         item {
             // Text with Subscript and Superscript
             Text(
-                text = buildAnnotatedString {
-                    append("Below is text with sub/super script\n")
-                    append("H")
-                    withStyle(style = SpanStyle(baselineShift = BaselineShift.Subscript)) {
-                        append("2")
-                    }
-                    append("O is water and E = mc")
-                    withStyle(style = SpanStyle(baselineShift = BaselineShift.Superscript)) {
-                        append("2")
-                    }
-                    append(" is a famous equation.")
-                },
-                style = MontserratFamily.body1()
+                text =
+                    buildAnnotatedString {
+                        append("Below is text with sub/super script\n")
+                        append("H")
+                        withStyle(style = SpanStyle(baselineShift = BaselineShift.Subscript)) {
+                            append("2")
+                        }
+                        append("O is water and E = mc")
+                        withStyle(style = SpanStyle(baselineShift = BaselineShift.Superscript)) {
+                            append("2")
+                        }
+                        append(" is a famous equation.")
+                    },
+                style = MontserratFamily.body1(),
             )
         }
         item {
             // text with spacing spacing
             Text(
                 text = "Text with letter spacing",
-                style = MontserratFamily.body1().copy(
-                    letterSpacing = 2.sp
-                )
+                style =
+                    MontserratFamily.body1().copy(
+                        letterSpacing = 2.sp,
+                    ),
             )
         }
         item {
@@ -232,24 +246,28 @@ fun TextScreen(
                 text = "Text with background color",
                 style = MontserratFamily.body1(),
                 color = Color.White,
-                modifier = Modifier
-                    .background(Color.Blue)
-                    .padding(4.dp)
+                modifier =
+                    Modifier
+                        .background(Color.Blue)
+                        .padding(4.dp),
             )
         }
         item {
             // cdata html string text
             Text(
-                text = AnnotatedString.Companion
-                    .fromHtml(
-                        htmlString = stringResource(R.string.cdata_string),
-                        linkStyles = TextLinkStyles(
-                            style = SpanStyle(
-                                color = Color.Blue,
-                                textDecoration = TextDecoration.Underline
-                            )
-                        )
-                    )
+                text =
+                    AnnotatedString.Companion
+                        .fromHtml(
+                            htmlString = stringResource(R.string.cdata_string),
+                            linkStyles =
+                                TextLinkStyles(
+                                    style =
+                                        SpanStyle(
+                                            color = Color.Blue,
+                                            textDecoration = TextDecoration.Underline,
+                                        ),
+                                ),
+                        ),
             )
         }
     }
