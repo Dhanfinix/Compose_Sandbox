@@ -1,5 +1,6 @@
 package edts.android.composesandbox.screen.main
 
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,7 +27,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import edts.android.composesandbox.R
 import edts.android.composesandbox.component.ChangeNameDialogComp
 import edts.android.composesandbox.component.EmptyStateComp
@@ -35,7 +35,11 @@ import edts.android.composesandbox.component.SortBottomSheetComp
 import edts.android.composesandbox.component.mainItem.MainItemComp
 import edts.android.composesandbox.component.search.SearchComp
 import edts.android.composesandbox.component.search.SearchDelegate
+import edts.android.composesandbox.component.theme_button.ThemeButtonComp
+import edts.android.composesandbox.data.SettingsDataStorePreference
+import edts.android.composesandbox.data.UserDataStorePreference
 import edts.android.composesandbox.navigation.Destination
+import edts.android.composesandbox.navigation.LocalTheme
 import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,6 +55,7 @@ fun MainScreen(
     val context = LocalContext.current
     var filteredItems by remember { mutableStateOf(uiState.menuItems) }
     var showSort by remember { mutableStateOf(false) }
+    val theme = LocalTheme.current
 
     LaunchedEffect(uiState.searchState.value, uiState.sortType) {
         filteredItems =
@@ -85,8 +90,13 @@ fun MainScreen(
                     }
                 },
                 actions = {
+                    ThemeButtonComp(
+                        mode = theme,
+                    ) {
+                        viewModel.changeTheme(it)
+                    }
                     SearchComp(
-                        modifier = Modifier.padding(horizontal = 16.dp),
+                        modifier = Modifier.padding(end = 16.dp),
                         state = uiState.searchState,
                         delegate =
                             object : SearchDelegate {
@@ -167,9 +177,13 @@ fun MainScreen(
 @Preview(showSystemUi = true)
 @Composable
 private fun MainScreenPreview() {
+    val context = LocalContext.current
     ComposeSandboxTheme {
         MainScreen(
-            viewModel = hiltViewModel<MainViewModel>(),
+            viewModel = mockMainViewModel(context),
         ) {}
     }
 }
+
+private fun mockMainViewModel(context: Context): MainViewModel =
+    MainViewModel(UserDataStorePreference(context), SettingsDataStorePreference(context))

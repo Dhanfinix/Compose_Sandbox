@@ -20,4 +20,6 @@ abstract class BaseDataStorePreference {
         key: Preferences.Key<T>,
         defaultValue: T,
     ): Flow<T> = dataStore.data.map { preferences -> preferences[key] ?: defaultValue }
+
+    protected fun getDatastoreData() = dataStore.data
 }

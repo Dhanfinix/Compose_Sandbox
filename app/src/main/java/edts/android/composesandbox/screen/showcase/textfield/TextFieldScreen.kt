@@ -32,7 +32,6 @@ import edts.android.composesandbox.ui.theme.ComposeSandboxTheme
 import edts.android.composesandbox.ui.theme.InterFamily
 import edts.android.composesandbox.ui.theme.body1
 import edts.android.composesandbox.util.LightDarkPreview
-import kotlin.math.exp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -153,33 +152,34 @@ fun TextFieldScreen(
 
             ExposedDropdownMenuBox(
                 expanded = expanded,
-                onExpandedChange = { expanded = !expanded }
+                onExpandedChange = { expanded = !expanded },
             ) {
                 OutlinedTextField(
                     value = text,
                     onValueChange = { text = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .menuAnchor(MenuAnchorType.PrimaryEditable),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .menuAnchor(MenuAnchorType.PrimaryEditable),
                     label = { Text("Select an Option") },
                     placeholder = { Text("No option selected") },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(expanded)
                     },
                     colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors(),
-                    readOnly = true
+                    readOnly = true,
                 )
                 ExposedDropdownMenu(
                     expanded = expanded,
-                    onDismissRequest = { expanded = false }
+                    onDismissRequest = { expanded = false },
                 ) {
-                    options.forEach { option->
+                    options.forEach { option ->
                         DropdownMenuItem(
                             text = { Text(option) },
                             onClick = {
                                 text = option
                                 expanded = false
-                            }
+                            },
                         )
                     }
                 }

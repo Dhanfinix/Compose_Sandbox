@@ -3,6 +3,7 @@ package edts.android.composesandbox.screen.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import edts.android.composesandbox.component.theme_button.ThemeMode
 import edts.android.composesandbox.data.SettingsDataStorePreference
 import edts.android.composesandbox.data.UserDataStorePreference
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -75,7 +76,7 @@ class MainViewModel
 
         private fun getSortType() =
             viewModelScope.launch {
-                settingsDataStore.getSortType().collectLatest { ordinal->
+                settingsDataStore.getSortType().collectLatest { ordinal ->
                     _uiState.update {
                         it.copy(
                             sortType = SortType.entries.toTypedArray().getOrNull(ordinal) ?: SortType.CREATED,
@@ -92,6 +93,12 @@ class MainViewModel
             }
             viewModelScope.launch {
                 settingsDataStore.saveSortType(sortType)
+            }
+        }
+
+        fun changeTheme(themeMode: ThemeMode) {
+            viewModelScope.launch {
+                settingsDataStore.saveThemeMode(themeMode)
             }
         }
     }
