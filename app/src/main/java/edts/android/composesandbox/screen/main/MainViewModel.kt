@@ -76,10 +76,10 @@ class MainViewModel
 
         private fun getSortType() =
             viewModelScope.launch {
-                settingsDataStore.getSortType().collectLatest { ordinal ->
+                settingsDataStore.getSortType().collectLatest { type ->
                     _uiState.update {
                         it.copy(
-                            sortType = SortType.entries.toTypedArray().getOrNull(ordinal) ?: SortType.CREATED,
+                            sortType = type,
                         )
                     }
                 }
