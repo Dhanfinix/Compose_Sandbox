@@ -1,4 +1,5 @@
 ## Compose Sandbox
+![Icon](app/src/main/ic_launcher-playstore.png)
 
 ### Overview
 Compose Sandbox is an experimental Android application built using Jetpack Compose, Dagger Hilt, and DataStore. As the name suggests, this app serves as a sandbox for the author to experiment with various composable components and modern Android development practices.
